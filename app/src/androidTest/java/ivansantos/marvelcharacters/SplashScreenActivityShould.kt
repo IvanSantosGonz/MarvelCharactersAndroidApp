@@ -2,7 +2,9 @@ package ivansantos.marvelcharacters
 
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -20,8 +22,8 @@ class SplashScreenActivityShould {
 
     @Test
     fun display_app_logo() {
-        val splashScreenImage = Espresso.onView(ViewMatchers.withId(R.id.image_splash))
+        val splashScreenImage = Espresso.onView(withId(R.id.image_splash))
 
-        splashScreenImage.check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        splashScreenImage.check(matches(isDisplayed()))
     }
 }
