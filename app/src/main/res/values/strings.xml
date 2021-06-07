@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Marvel Characters</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
 </resources>
