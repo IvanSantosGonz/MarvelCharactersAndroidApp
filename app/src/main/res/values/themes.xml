@@ -1,14 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Theme.MarvelCharacters" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/marvel_light_red</item>
         <item name="colorPrimaryVariant">@color/marvel_red</item>
         <item name="colorOnPrimary">@color/white</item>
 
-        <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
     </style>
 
     <style name="Theme.MarvelCharacters.NoActionBar">
