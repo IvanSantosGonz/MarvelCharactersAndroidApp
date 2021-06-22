@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MarvelCharacters" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.MarvelCharacters" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/marvel_light_red</item>
         <item name="colorPrimaryVariant">@color/marvel_red</item>
