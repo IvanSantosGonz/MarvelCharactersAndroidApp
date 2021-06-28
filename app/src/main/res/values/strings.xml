@@ -3,4 +3,11 @@
     <!--Splash Screen-->
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="marvel_logo">Marvel logo</string>
+
+    <!-- master fragment-->
+    <string name="marvel_character_image">Marvel character image</string>
+    <string name="title_master_fragment">Items</string>
+
+    <!-- details fragment-->
+    <string name="title_detail_fragment">Item Detail</string>
 </resources>

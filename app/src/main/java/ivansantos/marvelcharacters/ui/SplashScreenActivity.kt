@@ -1,4 +1,4 @@
-package ivansantos.marvelcharacters.presentation
+package ivansantos.marvelcharacters.ui
 
 import android.content.Intent
 import android.os.Bundle
