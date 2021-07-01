@@ -1,8 +1,7 @@
 package ivansantos.marvelcharacters
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import ivansantos.marvelcharacters.data.MarvelCharactersInMemoryRepository
 import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.utils.getOrAwaitValue
 import org.assertj.core.api.Assertions.assertThat
@@ -16,27 +15,12 @@ class MarvelCharactersRepositoryShould {
 
     @Test
     fun return_some_marvel_characters() {
-        val marvelCharactersRepository = MarvelCharactersRepository()
+        val marvelCharactersRepository = MarvelCharactersInMemoryRepository()
 
         val marvelCharacters: List<MarvelCharacter> =
             marvelCharactersRepository.marvelCharacters.getOrAwaitValue()
 
         assertThat(marvelCharacters).isNotEmpty
     }
-
 }
 
-class MarvelCharactersRepository {
-
-    val marvelCharacters: LiveData<List<MarvelCharacter>> =
-        MutableLiveData(createSampleCharacters())
-
-    private fun createSampleCharacters(): List<MarvelCharacter> {
-        return mutableListOf(
-            MarvelCharacter("Captain America"),
-            MarvelCharacter("Wonder Woman"),
-            MarvelCharacter("Hulk"),
-            MarvelCharacter("Black Panther"),
-        )
-    }
-}
