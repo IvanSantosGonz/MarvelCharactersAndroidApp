@@ -28,5 +28,15 @@ class MarvelCharactersRepositoryShould {
 
 class MarvelCharactersRepository {
 
-    val marvelCharacters: LiveData<List<MarvelCharacter>> = MutableLiveData(listOf())
+    val marvelCharacters: LiveData<List<MarvelCharacter>> =
+        MutableLiveData(createSampleCharacters())
+
+    private fun createSampleCharacters(): List<MarvelCharacter> {
+        return mutableListOf(
+            MarvelCharacter("Captain America"),
+            MarvelCharacter("Wonder Woman"),
+            MarvelCharacter("Hulk"),
+            MarvelCharacter("Black Panther"),
+        )
+    }
 }
