@@ -13,6 +13,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import ivansantos.marvelcharacters.R
 import org.hamcrest.CoreMatchers
 import org.hamcrest.Matcher
@@ -20,12 +22,16 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class MainViewShould {
 
     @get:Rule
     var rule = ActivityScenarioRule(MainActivity::class.java)
+
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
 
     @Test
     fun show_master_view_with_loaded_characters() {

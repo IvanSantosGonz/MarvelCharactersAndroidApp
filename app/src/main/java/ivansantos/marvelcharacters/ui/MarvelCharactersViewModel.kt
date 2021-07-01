@@ -2,22 +2,21 @@ package ivansantos.marvelcharacters.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ivansantos.marvelcharacters.domain.MarvelCharacter
+import ivansantos.marvelcharacters.domain.MarvelCharactersRepository
+import javax.inject.Inject
 
-class MarvelCharactersViewModel : ViewModel() {
+@HiltViewModel
+class MarvelCharactersViewModel @Inject constructor(private val marvelCharactersRepository: MarvelCharactersRepository) :
+    ViewModel() {
 
-    val characters: MutableLiveData<MutableList<MarvelCharacter>> =
-        MutableLiveData<MutableList<MarvelCharacter>>()
+    val characters: MutableLiveData<List<MarvelCharacter>> =
+        marvelCharactersRepository.marvelCharacters
     var selectedCharacter: MutableLiveData<MarvelCharacter> = MutableLiveData<MarvelCharacter>()
 
     fun createSampleCharacters() {
-        val characters = mutableListOf(
-            MarvelCharacter("Captain America"),
-            MarvelCharacter("Wonder Woman"),
-            MarvelCharacter("Hulk"),
-            MarvelCharacter("Black Panther"),
-        )
-        this.characters.value = characters
+        marvelCharactersRepository.createSampleCharacters()
     }
 
     fun setSelected(marvelCharacter: MarvelCharacter) {
