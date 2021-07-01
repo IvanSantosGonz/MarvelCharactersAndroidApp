@@ -3,6 +3,7 @@
     package="ivansantos.marvelcharacters">
 
     <application
+        android:name=".MarvelCharactersApplication"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
