@@ -1,13 +1,15 @@
-package ivansantos.marvelcharacters.data
+package ivansantos.marvelcharacters.data.repositories
 
 import androidx.lifecycle.MutableLiveData
 import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.domain.MarvelCharactersRepository
+import kotlinx.coroutines.runBlocking
 
-class MarvelCharactersInMemoryRepository : MarvelCharactersRepository {
+class InMemoryMarvelCharactersRepository : MarvelCharactersRepository {
 
     override val marvelCharacters: MutableLiveData<List<MarvelCharacter>> =
-        MutableLiveData(createSampleCharacters())
+        MutableLiveData(
+            runBlocking { createSampleCharacters() })
 
     override fun createSampleCharacters(): List<MarvelCharacter> {
         return mutableListOf(

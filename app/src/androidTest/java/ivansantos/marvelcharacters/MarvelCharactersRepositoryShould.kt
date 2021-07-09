@@ -1,7 +1,7 @@
 package ivansantos.marvelcharacters
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import ivansantos.marvelcharacters.data.MarvelCharactersInMemoryRepository
+import ivansantos.marvelcharacters.data.repositories.InMemoryMarvelCharactersRepository
 import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.utils.getOrAwaitValue
 import org.assertj.core.api.Assertions.assertThat
@@ -15,7 +15,7 @@ class MarvelCharactersRepositoryShould {
 
     @Test
     fun return_some_marvel_characters() {
-        val marvelCharactersRepository = MarvelCharactersInMemoryRepository()
+        val marvelCharactersRepository = InMemoryMarvelCharactersRepository()
 
         val marvelCharacters: List<MarvelCharacter> =
             marvelCharactersRepository.marvelCharacters.getOrAwaitValue()

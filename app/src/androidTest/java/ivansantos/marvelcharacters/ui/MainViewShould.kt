@@ -13,15 +13,24 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
+import dagger.hilt.components.SingletonComponent
 import ivansantos.marvelcharacters.R
+import ivansantos.marvelcharacters.data.repositories.InMemoryMarvelCharactersRepository
+import ivansantos.marvelcharacters.di.MarvelCharactersModule
+import ivansantos.marvelcharacters.domain.MarvelCharactersRepository
 import org.hamcrest.CoreMatchers
 import org.hamcrest.Matcher
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@UninstallModules(MarvelCharactersModule::class)
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -32,6 +41,16 @@ class MainViewShould {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
+
+    @Module
+    @InstallIn(SingletonComponent::class)
+    class TestCharactersModule {
+        @Provides
+        fun provideMarvelCharactersRepository(): MarvelCharactersRepository {
+            return InMemoryMarvelCharactersRepository()
+        }
+    }
+
 
     @Test
     fun show_master_view_with_loaded_characters() {
