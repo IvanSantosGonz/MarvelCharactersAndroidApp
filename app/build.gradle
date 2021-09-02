@@ -78,7 +78,6 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
-    androidTestImplementation 'org.mockito:mockito-android:2.24.5'
 
     // mockk
     testImplementation "io.mockk:mockk:1.12.0"
