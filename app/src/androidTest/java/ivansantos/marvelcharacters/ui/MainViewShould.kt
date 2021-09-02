@@ -19,20 +19,20 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
 import ivansantos.marvelcharacters.R
 import ivansantos.marvelcharacters.data.*
 import ivansantos.marvelcharacters.data.repositories.DefaultMarvelCharactersRepository
 import ivansantos.marvelcharacters.di.MarvelCharactersModule
 import ivansantos.marvelcharacters.domain.MarvelCharactersRepository
-import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers
 import org.hamcrest.Matcher
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.MockitoAnnotations.initMocks
 
 @UninstallModules(MarvelCharactersModule::class)
 @HiltAndroidTest
@@ -44,7 +44,7 @@ class MainViewShould {
     lateinit var marvelAPI: MarvelAPI
 
     @BindValue
-    @Mock
+    @MockK
     lateinit var remoteDataSource: RemoteDataSource
 
     @BindValue
@@ -55,9 +55,12 @@ class MainViewShould {
 
     lateinit var scenario: ActivityScenario<MainActivity>
 
+    @Before
+    fun setUp() =
+        MockKAnnotations.init(this, relaxUnitFun = true) // turn relaxUnitFun on for all mocks
+
     @Test
     fun show_master_view_with_loaded_characters() {
-        initMocks(this)
         returnFakeMarvelApiResponseWhenCallRemoteDatasourceGetCharacters()
         initMarvelCharactersRepositoryWithMockedDataSource()
         launchMainActivity()
@@ -69,7 +72,6 @@ class MainViewShould {
 
     @Test
     fun navigate_from_master_to_detail_and_show_character_details() {
-        initMocks(this)
         returnFakeMarvelApiResponseWhenCallRemoteDatasourceGetCharacters()
         initMarvelCharactersRepositoryWithMockedDataSource()
         launchMainActivity()
@@ -109,12 +111,11 @@ class MainViewShould {
         "Ok")
 
     private fun returnFakeMarvelApiResponseWhenCallRemoteDatasourceGetCharacters() {
-        Mockito.`when`(runBlocking {
-            remoteDataSource.getCharacters(Mockito.anyString(),
-                Mockito.anyString(),
-                Mockito.anyString())
-        })
-            .thenReturn(fakeMarvelAPIResponseDTO)
+        coEvery {
+            remoteDataSource.getCharacters(any(),
+                any(),
+                any())
+        } returns fakeMarvelAPIResponseDTO
     }
 
     private fun launchMainActivity() {
