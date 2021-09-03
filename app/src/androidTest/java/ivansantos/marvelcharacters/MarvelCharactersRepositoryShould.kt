@@ -22,5 +22,19 @@ class MarvelCharactersRepositoryShould {
 
         assertThat(marvelCharacters).isNotEmpty
     }
+
+    @Test
+    fun return_some_marvel_characters_with_name_and_thumbnail() {
+        val marvelCharactersRepository = InMemoryMarvelCharactersRepository()
+
+        val marvelCharacters: List<MarvelCharacter> =
+            marvelCharactersRepository.marvelCharacters.getOrAwaitValue()
+
+        assertThat(marvelCharacters).isNotEmpty
+        marvelCharacters.forEach {
+            assertThat(it.characterName).isNotEmpty
+            assertThat(it.thumbnail).isNotEmpty
+        }
+    }
 }
 

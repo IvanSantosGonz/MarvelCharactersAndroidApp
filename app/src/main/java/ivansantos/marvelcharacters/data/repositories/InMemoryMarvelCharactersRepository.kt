@@ -13,10 +13,10 @@ class InMemoryMarvelCharactersRepository : MarvelCharactersRepository {
 
     override fun createSampleCharacters(): List<MarvelCharacter> {
         return mutableListOf(
-            MarvelCharacter("Captain America"),
-            MarvelCharacter("Wonder Woman"),
-            MarvelCharacter("Hulk"),
-            MarvelCharacter("Black Panther"),
+            MarvelCharacter("Captain America", "urlExample/CaptainAmerica.png"),
+            MarvelCharacter("Wonder Woman", "urlExample/WonderWoman.png"),
+            MarvelCharacter("Hulk", "urlExample/Hulk.png"),
+            MarvelCharacter("Black Panther", "urlExample/Black Panther.png"),
         )
     }
 }
