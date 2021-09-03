@@ -9,7 +9,7 @@ class MarvelAPIResponseDTO(
 ) {
     fun getCharacters(): List<MarvelCharacter> {
         return this.data.results.map {
-            MarvelCharacter(it.name)
+            MarvelCharacter(it.name, it.thumbnail.path + it.thumbnail.extension)
         }
     }
 
