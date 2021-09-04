@@ -98,6 +98,10 @@ dependencies {
 
     // Apache common codecs used to md5 hash
     implementation 'commons-codec:commons-codec:1.15'
+
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 }
 
 tasks.withType(Test) {
