@@ -3,8 +3,10 @@ package ivansantos.marvelcharacters.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import ivansantos.marvelcharacters.R
 import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.ui.MarvelCharactersRecyclerViewAdapter.MarvelCharactersViewHolder
@@ -37,6 +39,13 @@ class MarvelCharactersRecyclerViewAdapter(
             val marvelCharacterName =
                 itemView.findViewById<TextView>(R.id.text_marvel_character_name)
             marvelCharacterName.text = item.characterName
+            val marvelCharacterThumbnail =
+                itemView.findViewById<ImageView>(R.id.marvel_character_thumbnail)
+            val picasso = Picasso.get()
+            picasso.setIndicatorsEnabled(true)
+            picasso.isLoggingEnabled = true
+            picasso.load(item.thumbnail).error(R.drawable.marvel).into(marvelCharacterThumbnail)
+
 
             setOnClickListener(onClickListener)
         }

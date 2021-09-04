@@ -9,10 +9,10 @@ class MarvelAPIResponseDTO(
 ) {
     fun getCharacters(): List<MarvelCharacter> {
         return this.data.results.map {
-            MarvelCharacter(it.name, it.thumbnail.path + it.thumbnail.extension)
+            val thumbnail = "${it.thumbnail.path}/portrait_incredible.${it.thumbnail.extension}"
+            MarvelCharacter(it.name, thumbnail.replace("http", "https"))
         }
     }
-
 }
 
 data class Data(
