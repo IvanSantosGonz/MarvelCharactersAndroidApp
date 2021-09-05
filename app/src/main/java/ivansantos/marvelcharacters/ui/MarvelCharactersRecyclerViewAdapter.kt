@@ -39,12 +39,16 @@ class MarvelCharactersRecyclerViewAdapter(
             val marvelCharacterName =
                 itemView.findViewById<TextView>(R.id.text_marvel_character_name)
             marvelCharacterName.text = item.characterName
+
             val marvelCharacterThumbnail =
                 itemView.findViewById<ImageView>(R.id.marvel_character_thumbnail)
             val picasso = Picasso.get()
             picasso.setIndicatorsEnabled(true)
             picasso.isLoggingEnabled = true
             picasso.load(item.thumbnail).error(R.drawable.marvel).into(marvelCharacterThumbnail)
+
+            marvelCharacterThumbnail.contentDescription =
+                "${item.characterName} ${context.getString(R.string.thumbnail)}"
 
             setOnClickListener(onClickListener)
         }
