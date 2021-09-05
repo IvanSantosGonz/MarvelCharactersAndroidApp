@@ -46,7 +46,6 @@ class MarvelCharactersRecyclerViewAdapter(
             picasso.isLoggingEnabled = true
             picasso.load(item.thumbnail).error(R.drawable.marvel).into(marvelCharacterThumbnail)
 
-
             setOnClickListener(onClickListener)
         }
     }
