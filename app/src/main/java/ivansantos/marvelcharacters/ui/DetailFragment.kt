@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.squareup.picasso.Picasso
+import ivansantos.marvelcharacters.R
 import ivansantos.marvelcharacters.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
@@ -37,6 +39,13 @@ class DetailFragment : Fragment() {
         characterName?.let {
             itemDetailTextView.text = it
         }
+        val thumbnail = marvelCharactersViewModel.selectedCharacter.value?.thumbnail
+        val imageMarvelCharacterDetailsThumbnail =
+            fragmentDetailBinding!!.imageMarvelCharacterDetailsThumbnail
+        Picasso.get().load(thumbnail).error(R.drawable.marvel)
+            .into(imageMarvelCharacterDetailsThumbnail)
+        imageMarvelCharacterDetailsThumbnail.contentDescription =
+            "$characterName ${getString(R.string.thumbnail)}"
 
         return rootView
     }
