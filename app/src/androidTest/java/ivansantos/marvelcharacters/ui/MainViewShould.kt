@@ -87,7 +87,7 @@ class MainViewShould {
     private fun checkCharacterCardIsLoaded(marvelCharacter: MarvelCharacter) {
         val marvelCharacterName = onView(withId(R.id.text_marvel_character_name))
         marvelCharacterName.check(matches(withText(marvelCharacter.characterName)))
-        val marvelCharacterImage = onView(withId(R.id.marvel_character_thumbnail))
+        val marvelCharacterImage = onView(withId(R.id.image_marvel_character_thumbnail))
         marvelCharacterImage.check(matches(withContentDescription("${marvelCharacter.characterName} thumbnail")))
     }
 
@@ -102,8 +102,16 @@ class MainViewShould {
         val characterView = onView(withText("Fake Hero"))
         characterView.perform(ViewActions.click())
 
-        val detailFragmentText = onView(withId(R.id.item_detail))
-        detailFragmentText.check(matches(withText("Fake Hero")))
+        val expectedCharacter = MarvelCharacter("Fake Hero",
+            "https://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73/portrait_xlarge/portrait_incredible.jpg")
+        checkCharacterDetailsAreLoaded(expectedCharacter)
+    }
+
+    private fun checkCharacterDetailsAreLoaded(marvelCharacter: MarvelCharacter) {
+        val marvelCharacterName = onView(withId(R.id.text_marvel_character_details_name))
+        marvelCharacterName.check(matches(withText(marvelCharacter.characterName)))
+        val marvelCharacterImage = onView(withId(R.id.image_marvel_character_details_thumbnail))
+        marvelCharacterImage.check(matches(withContentDescription("${marvelCharacter.characterName} thumbnail")))
     }
 
     private fun initMarvelCharactersRepositoryWith(remoteDataSource: RemoteDataSource) {
