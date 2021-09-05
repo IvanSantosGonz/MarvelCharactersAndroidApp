@@ -81,10 +81,10 @@ class MainViewShould {
 
         val expectedCharacter = MarvelCharacter("Fake Hero",
             "https://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73/portrait_xlarge/portrait_incredible.jpg")
-        checkCharacterIsLoaded(expectedCharacter)
+        checkCharacterCardIsLoaded(expectedCharacter)
     }
 
-    private fun checkCharacterIsLoaded(marvelCharacter: MarvelCharacter) {
+    private fun checkCharacterCardIsLoaded(marvelCharacter: MarvelCharacter) {
         val marvelCharacterName = onView(withId(R.id.text_marvel_character_name))
         marvelCharacterName.check(matches(withText(marvelCharacter.characterName)))
         val marvelCharacterImage = onView(withId(R.id.marvel_character_thumbnail))
