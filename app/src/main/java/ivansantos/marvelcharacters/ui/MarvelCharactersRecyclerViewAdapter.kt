@@ -41,7 +41,7 @@ class MarvelCharactersRecyclerViewAdapter(
             marvelCharacterName.text = item.characterName
 
             val marvelCharacterThumbnail =
-                itemView.findViewById<ImageView>(R.id.marvel_character_thumbnail)
+                itemView.findViewById<ImageView>(R.id.image_marvel_character_thumbnail)
             val picasso = Picasso.get()
             picasso.setIndicatorsEnabled(true)
             picasso.isLoggingEnabled = true

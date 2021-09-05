@@ -11,4 +11,5 @@
 
     <!-- details fragment-->
     <string name="title_detail_fragment">Item Detail</string>
+    <string name="fab_button">fab button</string>
 </resources>
