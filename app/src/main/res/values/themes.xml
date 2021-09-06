@@ -7,7 +7,7 @@
         <item name="colorOnPrimary">@color/white</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-    </style>
+</style>
 
     <style name="Theme.MarvelCharacters.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -17,4 +17,16 @@
     <style name="Theme.MarvelCharacters.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.MarvelCharacters.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Widget.MaterialComponents.CollapsingToolbar.collapsed">
+        <item name="android:shadowRadius">8</item>
+        <item name="android:shadowColor">@android:color/black</item>
+    </style>
+
+    <style name="TextAppearance.Design.CollapsingToolbar.Expanded.shadow">
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowRadius">8</item>
+        <item name="android:shadowColor">@android:color/black</item>
+    </style>
 </resources>
