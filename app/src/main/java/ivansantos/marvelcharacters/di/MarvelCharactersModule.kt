@@ -8,9 +8,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ivansantos.marvelcharacters.R
 import ivansantos.marvelcharacters.data.MarvelAPI
+import ivansantos.marvelcharacters.data.PicassoThumbnailService
 import ivansantos.marvelcharacters.data.RemoteDataSource
 import ivansantos.marvelcharacters.data.repositories.DefaultMarvelCharactersRepository
 import ivansantos.marvelcharacters.domain.MarvelCharactersRepository
+import ivansantos.marvelcharacters.domain.ThumbnailService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -47,5 +49,11 @@ class MarvelCharactersModule {
         marvelAPI: MarvelAPI,
     ): MarvelCharactersRepository {
         return DefaultMarvelCharactersRepository(remoteDataSource, marvelAPI)
+    }
+
+    @Singleton
+    @Provides
+    fun provideThumbnailService(): ThumbnailService {
+        return PicassoThumbnailService()
     }
 }

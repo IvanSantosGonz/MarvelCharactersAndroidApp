@@ -26,6 +26,8 @@ import ivansantos.marvelcharacters.data.repositories.DefaultMarvelCharactersRepo
 import ivansantos.marvelcharacters.di.MarvelCharactersModule
 import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.domain.MarvelCharactersRepository
+import ivansantos.marvelcharacters.domain.ThumbnailImage
+import ivansantos.marvelcharacters.domain.ThumbnailService
 import org.hamcrest.CoreMatchers
 import org.hamcrest.Matcher
 import org.junit.Before
@@ -48,6 +50,9 @@ class MainViewShould {
 
     @BindValue
     lateinit var marvelCharactersRepository: MarvelCharactersRepository
+
+    @BindValue
+    var thumbnailService: ThumbnailService = PicassoThumbnailService()
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -79,8 +84,9 @@ class MainViewShould {
 
         launchMainActivity()
 
-        val expectedCharacter = MarvelCharacter("Fake Hero",
-            "https://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73/portrait_xlarge/portrait_incredible.jpg")
+        val expectedThumbnail =
+            ThumbnailImage("https://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73", "jpg")
+        val expectedCharacter = MarvelCharacter("Fake Hero", expectedThumbnail)
         checkCharacterCardIsLoaded(expectedCharacter)
     }
 
@@ -102,8 +108,9 @@ class MainViewShould {
         val characterView = onView(withText("Fake Hero"))
         characterView.perform(ViewActions.click())
 
-        val expectedCharacter = MarvelCharacter("Fake Hero",
-            "https://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73/portrait_xlarge/portrait_incredible.jpg")
+        val expectedThumbnail =
+            ThumbnailImage("https://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73", "jpg")
+        val expectedCharacter = MarvelCharacter("Fake Hero", expectedThumbnail)
         checkCharacterDetailsAreLoaded(expectedCharacter)
     }
 

@@ -9,15 +9,22 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import ivansantos.marvelcharacters.R
 import ivansantos.marvelcharacters.databinding.FragmentMasterBinding
 import ivansantos.marvelcharacters.domain.MarvelCharacter
+import ivansantos.marvelcharacters.domain.ThumbnailService
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MasterFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: MarvelCharactersRecyclerViewAdapter
     private lateinit var fragmentMasterBinding: FragmentMasterBinding
+
+    @Inject
+    lateinit var thumbnailService: ThumbnailService
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,7 +65,8 @@ class MasterFragment : Fragment() {
         onClickListener: View.OnClickListener,
     ) {
         val viewManager = GridLayoutManager(context, 2)
-        viewAdapter = MarvelCharactersRecyclerViewAdapter(dataset, onClickListener)
+        viewAdapter =
+            MarvelCharactersRecyclerViewAdapter(dataset, onClickListener, thumbnailService)
         recyclerView = fragmentMasterBinding.recyclerViewCharacters
         recyclerView.apply {
             setHasFixedSize(true)

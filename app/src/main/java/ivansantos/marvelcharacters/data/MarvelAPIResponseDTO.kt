@@ -1,6 +1,7 @@
 package ivansantos.marvelcharacters.data
 
 import ivansantos.marvelcharacters.domain.MarvelCharacter
+import ivansantos.marvelcharacters.domain.ThumbnailImage
 
 class MarvelAPIResponseDTO(
     val code: String,
@@ -9,8 +10,9 @@ class MarvelAPIResponseDTO(
 ) {
     fun getCharacters(): List<MarvelCharacter> {
         return this.data.results.map {
-            val thumbnail = "${it.thumbnail.path}/portrait_incredible.${it.thumbnail.extension}"
-            MarvelCharacter(it.name, thumbnail.replace("http", "https"))
+            val httpsThumbnailUrl = it.thumbnail.path.replace("http", "https")
+            val thumbnail = ThumbnailImage(httpsThumbnailUrl, it.thumbnail.extension)
+            MarvelCharacter(it.name, thumbnail)
         }
     }
 }

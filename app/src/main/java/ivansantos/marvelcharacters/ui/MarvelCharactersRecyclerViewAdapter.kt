@@ -6,14 +6,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
 import ivansantos.marvelcharacters.R
 import ivansantos.marvelcharacters.domain.MarvelCharacter
+import ivansantos.marvelcharacters.domain.ThumbnailService
 import ivansantos.marvelcharacters.ui.MarvelCharactersRecyclerViewAdapter.MarvelCharactersViewHolder
 
 class MarvelCharactersRecyclerViewAdapter(
     private var marvelCharacters: List<MarvelCharacter>,
     private val onClickListener: View.OnClickListener,
+    private val thumbnailService: ThumbnailService,
 ) :
     RecyclerView.Adapter<MarvelCharactersViewHolder>() {
 
@@ -42,10 +43,7 @@ class MarvelCharactersRecyclerViewAdapter(
 
             val marvelCharacterThumbnail =
                 itemView.findViewById<ImageView>(R.id.image_marvel_character_thumbnail)
-            val picasso = Picasso.get()
-            picasso.setIndicatorsEnabled(true)
-            picasso.isLoggingEnabled = true
-            picasso.load(item.thumbnail).error(R.drawable.marvel).into(marvelCharacterThumbnail)
+            thumbnailService.loadPortraitThumbnail(item.thumbnailImage, marvelCharacterThumbnail)
 
             marvelCharacterThumbnail.contentDescription =
                 "${item.characterName} ${context.getString(R.string.thumbnail)}"

@@ -33,7 +33,7 @@ class MarvelCharactersRepositoryShould {
         assertThat(marvelCharacters).isNotEmpty
         marvelCharacters.forEach {
             assertThat(it.characterName).isNotEmpty
-            assertThat(it.thumbnail).isNotEmpty
+            assertThat(it.thumbnailImage).isNotNull
         }
     }
 }

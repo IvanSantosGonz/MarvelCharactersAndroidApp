@@ -3,6 +3,7 @@ package ivansantos.marvelcharacters.data.repositories
 import androidx.lifecycle.MutableLiveData
 import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.domain.MarvelCharactersRepository
+import ivansantos.marvelcharacters.domain.ThumbnailImage
 import kotlinx.coroutines.runBlocking
 
 class InMemoryMarvelCharactersRepository : MarvelCharactersRepository {
@@ -13,10 +14,10 @@ class InMemoryMarvelCharactersRepository : MarvelCharactersRepository {
 
     override fun createSampleCharacters(): List<MarvelCharacter> {
         return mutableListOf(
-            MarvelCharacter("Captain America", "urlExample/CaptainAmerica.png"),
-            MarvelCharacter("Wonder Woman", "urlExample/WonderWoman.png"),
-            MarvelCharacter("Hulk", "urlExample/Hulk.png"),
-            MarvelCharacter("Black Panther", "urlExample/Black Panther.png"),
+            MarvelCharacter("Captain America", ThumbnailImage("urlExample/CaptainAmerica", "png")),
+            MarvelCharacter("Wonder Woman", ThumbnailImage("urlExample/WonderWoman", "png")),
+            MarvelCharacter("Hulk", ThumbnailImage("urlExample/Hulk", "png")),
+            MarvelCharacter("Black Panther", ThumbnailImage("urlExample/Black Panther", "png")),
         )
     }
 }

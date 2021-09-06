@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import ivansantos.marvelcharacters.R
 import ivansantos.marvelcharacters.databinding.FragmentDetailBinding
+import ivansantos.marvelcharacters.domain.ThumbnailService
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     private lateinit var itemDetailTextView: TextView
@@ -18,9 +21,8 @@ class DetailFragment : Fragment() {
     private var fragmentDetailBinding: FragmentDetailBinding? = null
     private val marvelCharactersViewModel: MarvelCharactersViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    @Inject
+    lateinit var thumbnailService: ThumbnailService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,11 +41,13 @@ class DetailFragment : Fragment() {
         characterName?.let {
             itemDetailTextView.text = it
         }
-        val thumbnail = marvelCharactersViewModel.selectedCharacter.value?.thumbnail
+        val thumbnail = marvelCharactersViewModel.selectedCharacter.value?.thumbnailImage
         val imageMarvelCharacterDetailsThumbnail =
             fragmentDetailBinding!!.imageMarvelCharacterDetailsThumbnail
-        Picasso.get().load(thumbnail).error(R.drawable.marvel)
-            .into(imageMarvelCharacterDetailsThumbnail)
+        thumbnail?.let {
+            thumbnailService.loadLandscapeThumbnail(it,
+                imageMarvelCharacterDetailsThumbnail)
+        }
         imageMarvelCharacterDetailsThumbnail.contentDescription =
             "$characterName ${getString(R.string.thumbnail)}"
 
