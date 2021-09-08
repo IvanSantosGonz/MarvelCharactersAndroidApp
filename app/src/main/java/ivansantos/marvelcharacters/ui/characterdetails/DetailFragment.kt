@@ -36,12 +36,6 @@ class DetailFragment : Fragment() {
         val characterName = marvelCharactersViewModel.selectedCharacter.value?.characterName
         fragmentDetailBinding!!.toolbarLayout.title = characterName
 
-        itemDetailTextView = fragmentDetailBinding!!.textMarvelCharacterDetailsName
-
-        // Show the placeholder content as text in a TextView.
-        characterName?.let {
-            itemDetailTextView.text = it
-        }
         val thumbnail = marvelCharactersViewModel.selectedCharacter.value?.thumbnailImage
         val imageMarvelCharacterDetailsThumbnail =
             fragmentDetailBinding!!.imageMarvelCharacterDetailsThumbnail

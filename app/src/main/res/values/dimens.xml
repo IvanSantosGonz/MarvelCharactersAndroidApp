@@ -10,4 +10,5 @@
     <!--    characters grid-->
     <dimen name="characters_margin">8dp</dimen>
     <dimen name="card_default_radius">16dp</dimen>
+    <dimen name="default_text_indentation">16dp</dimen>
 </resources>

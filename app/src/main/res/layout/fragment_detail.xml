@@ -20,9 +20,9 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:collapsedTitleTextAppearance="@style/Widget.MaterialComponents.CollapsingToolbar.collapsed"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:contentScrim="@color/marvel_light_red_opaque"
             app:expandedTitleTextAppearance="@style/Widget.MaterialComponents.CollapsingToolbar.collapsed"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
             <ImageView
@@ -51,16 +51,32 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/text_marvel_character_details_name"
-            style="?android:attr/textAppearanceLarge"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
-            android:text=""
-            android:textIsSelectable="true"
-            tools:context="ivansantos.marvelcharacters.ui.characterdetails.DetailFragment" />
+            android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/text_marvel_character_details_description_label"
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/marvel"
+                android:padding="16dp"
+                android:text="@string/description_label"
+                android:textAllCaps="true"
+                android:textColor="@color/marvel_red" />
+
+            <TextView
+                android:id="@+id/text_marvel_character_details_description"
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/default_text_indentation"
+                android:padding="16dp"
+                android:text="@string/fake_description"
+                app:layout_constraintTop_toBottomOf="@+id/text_marvel_character_details_description_label" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
