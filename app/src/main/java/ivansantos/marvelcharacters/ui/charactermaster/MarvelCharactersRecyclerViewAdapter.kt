@@ -1,4 +1,4 @@
-package ivansantos.marvelcharacters.ui
+package ivansantos.marvelcharacters.ui.charactermaster
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ivansantos.marvelcharacters.R
 import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.domain.ThumbnailService
-import ivansantos.marvelcharacters.ui.MarvelCharactersRecyclerViewAdapter.MarvelCharactersViewHolder
+import ivansantos.marvelcharacters.ui.charactermaster.MarvelCharactersRecyclerViewAdapter.MarvelCharactersViewHolder
 
 class MarvelCharactersRecyclerViewAdapter(
     private var marvelCharacters: List<MarvelCharacter>,

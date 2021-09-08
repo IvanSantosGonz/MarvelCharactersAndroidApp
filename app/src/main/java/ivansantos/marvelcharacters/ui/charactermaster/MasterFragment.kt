@@ -1,4 +1,4 @@
-package ivansantos.marvelcharacters.ui
+package ivansantos.marvelcharacters.ui.charactermaster
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +14,7 @@ import ivansantos.marvelcharacters.R
 import ivansantos.marvelcharacters.databinding.FragmentMasterBinding
 import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.domain.ThumbnailService
+import ivansantos.marvelcharacters.ui.MarvelCharactersViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint

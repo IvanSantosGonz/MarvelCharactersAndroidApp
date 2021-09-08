@@ -1,4 +1,4 @@
-package ivansantos.marvelcharacters.ui
+package ivansantos.marvelcharacters.ui.characterdetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import ivansantos.marvelcharacters.R
 import ivansantos.marvelcharacters.databinding.FragmentDetailBinding
 import ivansantos.marvelcharacters.domain.ThumbnailService
+import ivansantos.marvelcharacters.ui.MarvelCharactersViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint

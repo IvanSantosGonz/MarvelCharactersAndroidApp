@@ -1,4 +1,4 @@
-package ivansantos.marvelcharacters.data
+package ivansantos.marvelcharacters.data.network
 
 import org.apache.commons.codec.binary.Hex
 import org.apache.commons.codec.digest.DigestUtils

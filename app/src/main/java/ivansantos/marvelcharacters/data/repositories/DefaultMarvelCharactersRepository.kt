@@ -1,8 +1,8 @@
 package ivansantos.marvelcharacters.data.repositories
 
 import androidx.lifecycle.MutableLiveData
-import ivansantos.marvelcharacters.data.MarvelAPI
 import ivansantos.marvelcharacters.data.RemoteDataSource
+import ivansantos.marvelcharacters.data.network.MarvelAPI
 import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.domain.MarvelCharactersRepository
 import kotlinx.coroutines.runBlocking

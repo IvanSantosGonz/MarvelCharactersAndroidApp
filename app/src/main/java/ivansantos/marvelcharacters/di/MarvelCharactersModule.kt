@@ -7,9 +7,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ivansantos.marvelcharacters.R
-import ivansantos.marvelcharacters.data.MarvelAPI
-import ivansantos.marvelcharacters.data.PicassoThumbnailService
 import ivansantos.marvelcharacters.data.RemoteDataSource
+import ivansantos.marvelcharacters.data.network.MarvelAPI
+import ivansantos.marvelcharacters.data.network.PicassoThumbnailService
 import ivansantos.marvelcharacters.data.repositories.DefaultMarvelCharactersRepository
 import ivansantos.marvelcharacters.domain.MarvelCharactersRepository
 import ivansantos.marvelcharacters.domain.ThumbnailService

@@ -59,7 +59,7 @@
             android:padding="16dp"
             android:text=""
             android:textIsSelectable="true"
-            tools:context="ivansantos.marvelcharacters.ui.DetailFragment" />
+            tools:context="ivansantos.marvelcharacters.ui.characterdetails.DetailFragment" />
 
     </androidx.core.widget.NestedScrollView>
 

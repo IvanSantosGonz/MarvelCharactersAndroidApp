@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/item_master_fragment"
-        android:name="ivansantos.marvelcharacters.ui.MasterFragment"
+        android:name="ivansantos.marvelcharacters.ui.charactermaster.MasterFragment"
         android:label="master_fragment">
         <action
             android:id="@+id/show_detail"
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/detail_fragment"
-        android:name="ivansantos.marvelcharacters.ui.DetailFragment"
+        android:name="ivansantos.marvelcharacters.ui.characterdetails.DetailFragment"
         android:label="detail_fragment"
         tools:layout="@layout/fragment_detail" />
 </navigation>

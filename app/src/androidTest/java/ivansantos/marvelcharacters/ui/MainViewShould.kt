@@ -22,6 +22,8 @@ import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import ivansantos.marvelcharacters.R
 import ivansantos.marvelcharacters.data.*
+import ivansantos.marvelcharacters.data.network.MarvelAPI
+import ivansantos.marvelcharacters.data.network.PicassoThumbnailService
 import ivansantos.marvelcharacters.data.repositories.DefaultMarvelCharactersRepository
 import ivansantos.marvelcharacters.di.MarvelCharactersModule
 import ivansantos.marvelcharacters.domain.MarvelCharacter

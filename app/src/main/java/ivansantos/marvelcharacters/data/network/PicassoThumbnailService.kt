@@ -1,4 +1,4 @@
-package ivansantos.marvelcharacters.data
+package ivansantos.marvelcharacters.data.network
 
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
