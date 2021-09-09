@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import ivansantos.marvelcharacters.R
 import ivansantos.marvelcharacters.databinding.FragmentDetailBinding
+import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.domain.ThumbnailService
 import ivansantos.marvelcharacters.ui.MarvelCharactersViewModel
 import javax.inject.Inject
@@ -17,9 +17,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
 
-    private lateinit var itemDetailTextView: TextView
-
-    private var fragmentDetailBinding: FragmentDetailBinding? = null
+    private lateinit var fragmentDetailBinding: FragmentDetailBinding
     private val marvelCharactersViewModel: MarvelCharactersViewModel by activityViewModels()
 
     @Inject
@@ -31,26 +29,40 @@ class DetailFragment : Fragment() {
     ): View {
 
         fragmentDetailBinding = FragmentDetailBinding.inflate(inflater, container, false)
-        val rootView = fragmentDetailBinding!!.root
+        val rootView = fragmentDetailBinding.root
 
-        val characterName = marvelCharactersViewModel.selectedCharacter.value?.characterName
-        fragmentDetailBinding!!.toolbarLayout.title = characterName
-
-        val thumbnail = marvelCharactersViewModel.selectedCharacter.value?.thumbnailImage
-        val imageMarvelCharacterDetailsThumbnail =
-            fragmentDetailBinding!!.imageMarvelCharacterDetailsThumbnail
-        thumbnail?.let {
-            thumbnailService.loadLandscapeThumbnail(it,
-                imageMarvelCharacterDetailsThumbnail)
-        }
-        imageMarvelCharacterDetailsThumbnail.contentDescription =
-            "$characterName ${getString(R.string.thumbnail)}"
-
+        val currentCharacter = marvelCharactersViewModel.selectedCharacter.value
+        currentCharacter?.let { character -> bindCharacterDetailsView(character) }
         return rootView
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        fragmentDetailBinding = null
+    private fun bindCharacterDetailsView(currentCharacter: MarvelCharacter) {
+        setToolbarTitle(currentCharacter.characterName)
+        setThumbnail(currentCharacter)
+        setCharacterDescription(currentCharacter.description)
+    }
+
+    private fun setToolbarTitle(characterName: String?) {
+        fragmentDetailBinding.toolbarLayout.title = characterName
+    }
+
+    private fun setThumbnail(currentCharacter: MarvelCharacter) {
+        val imageMarvelCharacterDetailsThumbnail =
+            fragmentDetailBinding.imageMarvelCharacterDetailsThumbnail
+        thumbnailService.loadLandscapeThumbnail(currentCharacter.thumbnailImage,
+            imageMarvelCharacterDetailsThumbnail)
+
+        imageMarvelCharacterDetailsThumbnail.contentDescription =
+            "${currentCharacter.characterName} ${getString(R.string.thumbnail)}"
+    }
+
+    private fun setCharacterDescription(description: String) {
+        if (description.isEmpty()) {
+            fragmentDetailBinding.textMarvelCharacterDetailsDescription.text =
+                getString(R.string.not_available)
+        } else {
+            fragmentDetailBinding.textMarvelCharacterDetailsDescription.text =
+                description
+        }
     }
 }

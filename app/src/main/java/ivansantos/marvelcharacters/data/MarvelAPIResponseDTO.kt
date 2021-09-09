@@ -12,7 +12,7 @@ class MarvelAPIResponseDTO(
         return this.data.results.map {
             val httpsThumbnailUrl = it.thumbnail.path.replace("http", "https")
             val thumbnail = ThumbnailImage(httpsThumbnailUrl, it.thumbnail.extension)
-            MarvelCharacter(it.name, thumbnail)
+            MarvelCharacter(it.name, thumbnail, it.description)
         }
     }
 }
