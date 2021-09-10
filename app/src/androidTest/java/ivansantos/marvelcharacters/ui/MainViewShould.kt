@@ -100,7 +100,7 @@ class MainViewShould {
     }
 
     @Test
-    fun navigate_from_master_to_detail_and_show_character_details() {
+    fun load_character_thumbnail() {
         coEvery {
             remoteDataSource.getCharacters(any(), any(), any())
         } returns fakeMarvelAPIResponseDTO
@@ -110,17 +110,40 @@ class MainViewShould {
         val characterView = onView(withText("Fake Hero"))
         characterView.perform(ViewActions.click())
 
-        val expectedThumbnail =
-            ThumbnailImage("https://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73", "jpg")
-        val expectedCharacter = MarvelCharacter("Fake Hero", expectedThumbnail)
-        checkCharacterDetailsAreLoaded(expectedCharacter)
+        val marvelCharacterImage = onView(withId(R.id.image_marvel_character_details_thumbnail))
+        marvelCharacterImage.check(matches(withContentDescription("Fake Hero thumbnail")))
     }
 
-    private fun checkCharacterDetailsAreLoaded(marvelCharacter: MarvelCharacter) {
-        val marvelCharacterName = onView(withId(R.id.text_marvel_character_details_name))
-        marvelCharacterName.check(matches(withText(marvelCharacter.characterName)))
-        val marvelCharacterImage = onView(withId(R.id.image_marvel_character_details_thumbnail))
-        marvelCharacterImage.check(matches(withContentDescription("${marvelCharacter.characterName} thumbnail")))
+    @Test
+    fun load_character_description() {
+        coEvery {
+            remoteDataSource.getCharacters(any(), any(), any())
+        } returns fakeMarvelAPIResponseDTO
+        initMarvelCharactersRepositoryWith(remoteDataSource)
+        launchMainActivity()
+
+        val characterView = onView(withText("Fake Hero"))
+        characterView.perform(ViewActions.click())
+
+        val marvelCharacterDescription =
+            onView(withId(R.id.text_marvel_character_details_description))
+        marvelCharacterDescription.check(matches(withText("This is a Fake marvel character")))
+    }
+
+    @Test
+    fun load_character_without_any_available_description() {
+        coEvery {
+            remoteDataSource.getCharacters(any(), any(), any())
+        } returns fakeMarvelAPIResponseDTOWithEmptyDescription
+        initMarvelCharactersRepositoryWith(remoteDataSource)
+        launchMainActivity()
+
+        val characterView = onView(withText("Fake Hero"))
+        characterView.perform(ViewActions.click())
+
+        val marvelCharacterDescription =
+            onView(withId(R.id.text_marvel_character_details_description))
+        marvelCharacterDescription.check(matches(withText("N/A")))
     }
 
     private fun initMarvelCharactersRepositoryWith(remoteDataSource: RemoteDataSource) {
@@ -130,7 +153,7 @@ class MainViewShould {
         )
     }
 
-    private val fakeMarvelAPIResponseDTO = MarvelAPIResponseDTO(
+    private var fakeMarvelAPIResponseDTO = MarvelAPIResponseDTO(
         "200",
         Data(
             "1",
@@ -138,6 +161,26 @@ class MainViewShould {
             "1",
             listOf(Result(
                 "This is a Fake marvel character",
+                "1",
+                "a modified date",
+                "Fake Hero",
+                Thumbnail(
+                    "jpg",
+                    "http://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73"
+                )
+            )),
+            "1000"
+        ),
+        "Ok")
+
+    private var fakeMarvelAPIResponseDTOWithEmptyDescription = MarvelAPIResponseDTO(
+        "200",
+        Data(
+            "1",
+            "1",
+            "1",
+            listOf(Result(
+                "",
                 "1",
                 "a modified date",
                 "Fake Hero",
