@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/characters_margin"
+    app:cardBackgroundColor="@color/marvel_ultra_light_red"
     app:cardCornerRadius="@dimen/card_default_radius">
 
     <LinearLayout

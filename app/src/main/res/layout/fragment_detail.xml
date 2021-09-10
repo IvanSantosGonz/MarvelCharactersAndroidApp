@@ -60,7 +60,6 @@
                 style="?android:attr/textAppearanceLarge"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fontFamily="@font/marvel"
                 android:padding="16dp"
                 android:text="@string/description_label"
                 android:textAllCaps="true"
