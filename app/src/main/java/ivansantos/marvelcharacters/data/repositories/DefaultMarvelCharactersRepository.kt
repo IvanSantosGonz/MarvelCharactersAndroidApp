@@ -18,7 +18,8 @@ class DefaultMarvelCharactersRepository @Inject constructor(
     override fun createSampleCharacters(): List<MarvelCharacter> {
         val marvelCharacterDto =
             runBlocking {
-                remoteDataSource.getCharacters(marvelAPI.timestamp.toString(),
+                remoteDataSource.getCharacters(
+                    marvelAPI.timestamp.toString(),
                     marvelAPI.apiKey,
                     marvelAPI.hash)
             }
