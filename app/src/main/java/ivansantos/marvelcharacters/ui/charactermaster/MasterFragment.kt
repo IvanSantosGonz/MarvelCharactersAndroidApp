@@ -44,7 +44,6 @@ class MasterFragment : Fragment() {
         // it is associated to the fragment lifecycle)
         val marvelCharactersViewModel: MarvelCharactersViewModel by activityViewModels()
 
-        marvelCharactersViewModel.createSampleCharacters()
         val onClickListener = View.OnClickListener { itemView ->
             val clickedCharacterPosition = recyclerView.getChildAdapterPosition(itemView)
             val clickedMarvelCharacter =
@@ -52,7 +51,8 @@ class MasterFragment : Fragment() {
             clickedMarvelCharacter?.let { marvelCharactersViewModel.setSelected(it) }
             itemView.findNavController().navigate(R.id.show_detail)
         }
-        marvelCharactersViewModel.characters.value?.let { setAdapter(it, onClickListener) }
+        setAdapter(listOf(), onClickListener)
+        marvelCharactersViewModel.createSampleCharacters()
         marvelCharactersViewModel.characters.observe(
             this,
             { characters ->

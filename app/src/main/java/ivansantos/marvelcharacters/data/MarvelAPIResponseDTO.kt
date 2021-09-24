@@ -21,11 +21,11 @@ data class Data(
     val count: String,
     val limit: String,
     val offset: String,
-    val results: List<Result>,
+    val results: List<ResultDTO>,
     val total: String,
 )
 
-data class Result(
+data class ResultDTO(
     val description: String,
     val id: String,
     val modified: String,

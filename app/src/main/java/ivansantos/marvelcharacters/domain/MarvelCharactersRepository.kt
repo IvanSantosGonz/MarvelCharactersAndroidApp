@@ -1,10 +1,11 @@
 package ivansantos.marvelcharacters.domain
 
 import androidx.lifecycle.MutableLiveData
+import ivansantos.marvelcharacters.data.Result
 
 interface MarvelCharactersRepository {
 
-    val marvelCharacters: MutableLiveData<List<MarvelCharacter>>
+    val marvelCharacters: MutableLiveData<Result<List<MarvelCharacter>>>
 
-    fun createSampleCharacters(): List<MarvelCharacter>
+    suspend fun createSampleCharacters()
 }

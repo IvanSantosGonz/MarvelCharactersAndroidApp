@@ -159,7 +159,7 @@ class MainViewShould {
             "1",
             "1",
             "1",
-            listOf(Result(
+            listOf(ResultDTO(
                 "This is a Fake marvel character",
                 "1",
                 "a modified date",
@@ -179,7 +179,7 @@ class MainViewShould {
             "1",
             "1",
             "1",
-            listOf(Result(
+            listOf(ResultDTO(
                 "",
                 "1",
                 "a modified date",
