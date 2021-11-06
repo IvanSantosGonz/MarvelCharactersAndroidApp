@@ -43,6 +43,8 @@ class MasterFragment : Fragment() {
         //between master and detail fragment associated with the activity lifecycle (using by viewmodel
         // it is associated to the fragment lifecycle)
         val marvelCharactersViewModel: MarvelCharactersViewModel by activityViewModels()
+        fragmentMasterBinding.viewmodel = marvelCharactersViewModel
+        fragmentMasterBinding.lifecycleOwner = this
 
         val onClickListener = View.OnClickListener { itemView ->
             val clickedCharacterPosition = recyclerView.getChildAdapterPosition(itemView)
