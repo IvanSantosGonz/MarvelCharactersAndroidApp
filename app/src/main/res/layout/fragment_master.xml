@@ -24,20 +24,40 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:visibility="@{viewmodel.existCharacters ? View.VISIBLE : View.INVISIBLE }"
+            android:visibility="@{viewmodel.isLoadingCharacters ? View.INVISIBLE : View.VISIBLE }"
             app:layoutManager="LinearLayoutManager"
             tools:context="ivansantos.marvelcharacters.ui.MainActivity"
             tools:listitem="@layout/marvel_character_master_item" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="@{viewmodel.existCharacters ? View.INVISIBLE : View.VISIBLE }">
+            android:layout_height="wrap_content"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{viewmodel.isLoadingCharacters ? View.VISIBLE : View.INVISIBLE }"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:showIn="@layout/fragment_master">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:alpha="0.5"
+                android:contentDescription="@string/loading_marvel_characters"
+                android:scaleType="fitCenter"
+                android:src="@drawable/captain_shield" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Loading characters" />
+                android:fontFamily="@font/marvel"
+                android:gravity="center"
+                android:text="@string/loading_marvel_characters"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/marvel_red" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

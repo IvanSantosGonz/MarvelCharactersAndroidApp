@@ -13,9 +13,6 @@ import javax.inject.Inject
 class MarvelCharactersViewModel @Inject constructor(private val marvelCharactersRepository: MarvelCharactersRepository) :
     ViewModel() {
 
-    private var _existCharacters: MutableLiveData<Boolean> = MutableLiveData(false)
-    val existCharacters: LiveData<Boolean> = _existCharacters
-
     val characters: LiveData<List<MarvelCharacter>> =
         marvelCharactersRepository.marvelCharacters.map { marvelCharactersResult ->
             if (getCharactersFrom(marvelCharactersResult).value == null) {
@@ -27,8 +24,6 @@ class MarvelCharactersViewModel @Inject constructor(private val marvelCharacters
 
     val selectedCharacter: MutableLiveData<MarvelCharacter> = MutableLiveData<MarvelCharacter>()
 
-    private val isLoadingCharacters: MutableLiveData<Boolean> = MutableLiveData(false)
-
     fun createSampleCharacters() {
         viewModelScope.launch { marvelCharactersRepository.createSampleCharacters() }
     }
@@ -37,6 +32,9 @@ class MarvelCharactersViewModel @Inject constructor(private val marvelCharacters
         selectedCharacter.postValue(marvelCharacter)
     }
 
+    private val _isLoadingCharacters: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isLoadingCharacters: LiveData<Boolean> = _isLoadingCharacters
+
     private fun getCharactersFrom(marvelCharactersResult: Result<List<MarvelCharacter>>?): LiveData<List<MarvelCharacter>> {
         val result = MutableLiveData<List<MarvelCharacter>>()
         when (marvelCharactersResult) {
@@ -44,14 +42,14 @@ class MarvelCharactersViewModel @Inject constructor(private val marvelCharacters
                 marvelCharactersResult.data.also { marvelCharacters ->
                     result.value = marvelCharacters
                 }
-                isLoadingCharacters.postValue(false)
-                _existCharacters.postValue(true)
+                _isLoadingCharacters.postValue(false)
             }
             is Result.Error -> {
                 result.value = emptyList()
+                //TODO: lanzar toast con error
             }
             is Result.Loading -> {
-                isLoadingCharacters.postValue(true)
+                _isLoadingCharacters.postValue(true)
             }
         }
 
