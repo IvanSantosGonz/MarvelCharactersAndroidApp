@@ -35,6 +35,9 @@ class MarvelCharactersViewModel @Inject constructor(private val marvelCharacters
     private val _isLoadingCharacters: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoadingCharacters: LiveData<Boolean> = _isLoadingCharacters
 
+    private val _isErrorLoadingCharacters: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isErrorLoadingCharacters: LiveData<Boolean> = _isErrorLoadingCharacters
+
     private fun getCharactersFrom(marvelCharactersResult: Result<List<MarvelCharacter>>?): LiveData<List<MarvelCharacter>> {
         val result = MutableLiveData<List<MarvelCharacter>>()
         when (marvelCharactersResult) {
@@ -43,12 +46,15 @@ class MarvelCharactersViewModel @Inject constructor(private val marvelCharacters
                     result.value = marvelCharacters
                 }
                 _isLoadingCharacters.postValue(false)
+                _isErrorLoadingCharacters.postValue(false)
             }
             is Result.Error -> {
                 result.value = emptyList()
-                //TODO: lanzar toast con error
+                _isLoadingCharacters.postValue(false)
+                _isErrorLoadingCharacters.postValue(true)
             }
             is Result.Loading -> {
+                _isErrorLoadingCharacters.postValue(false)
                 _isLoadingCharacters.postValue(true)
             }
         }
