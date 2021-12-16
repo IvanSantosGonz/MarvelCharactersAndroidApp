@@ -146,6 +146,18 @@ class MainViewShould {
         marvelCharacterDescription.check(matches(withText("N/A")))
     }
 
+    @Test
+    fun show_error_page_when_api_fails() {
+        coEvery {
+            remoteDataSource.getCharacters(any(), any(), any())
+        } throws Exception()
+        initMarvelCharactersRepositoryWith(remoteDataSource)
+        launchMainActivity()
+
+        val errorPage = onView(withId(R.id.error_page_layout))
+        errorPage.check(matches(isDisplayed()))
+    }
+
     private fun initMarvelCharactersRepositoryWith(remoteDataSource: RemoteDataSource) {
         marvelCharactersRepository = DefaultMarvelCharactersRepository(
             remoteDataSource,
