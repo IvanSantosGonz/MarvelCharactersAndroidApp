@@ -53,6 +53,11 @@ class MasterFragment : Fragment() {
             clickedMarvelCharacter?.let { marvelCharactersViewModel.setSelected(it) }
             itemView.findNavController().navigate(R.id.show_detail)
         }
+
+        fragmentMasterBinding.retryButton.setOnClickListener {
+            marvelCharactersViewModel.createSampleCharacters()
+        }
+
         setAdapter(listOf(), onClickListener)
         marvelCharactersViewModel.createSampleCharacters()
         marvelCharactersViewModel.characters.observe(

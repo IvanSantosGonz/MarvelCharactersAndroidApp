@@ -6,6 +6,7 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="container_margin">8dp</dimen>
     <dimen name="default_padding">16dp</dimen>
+    <dimen name="default_icon_size">24dp</dimen>
 
     <!--    characters grid-->
     <dimen name="characters_margin">8dp</dimen>
