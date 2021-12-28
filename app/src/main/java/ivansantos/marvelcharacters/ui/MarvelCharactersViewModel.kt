@@ -14,18 +14,20 @@ class MarvelCharactersViewModel @Inject constructor(private val marvelCharacters
     ViewModel() {
 
     val characters: LiveData<List<MarvelCharacter>> =
-        marvelCharactersRepository.marvelCharacters.map { marvelCharactersResult ->
-            if (getCharactersFrom(marvelCharactersResult).value == null) {
-                listOf()
-            } else {
-                getCharactersFrom(marvelCharactersResult).value!!
-            }
+        marvelCharactersRepository.marvelCharacters.switchMap { marvelCharactersResult ->
+            insertFetchedCharactersFrom(marvelCharactersResult)
         }
 
     val selectedCharacter: MutableLiveData<MarvelCharacter> = MutableLiveData<MarvelCharacter>()
 
     fun createSampleCharacters() {
         viewModelScope.launch { marvelCharactersRepository.createSampleCharacters() }
+    }
+
+    fun loadMoreCharacters() {
+        viewModelScope.launch {
+            characters.value?.let { marvelCharactersRepository.retrieveCharactersFrom(it.size) }
+        }
     }
 
     fun setSelected(marvelCharacter: MarvelCharacter) {
@@ -38,7 +40,14 @@ class MarvelCharactersViewModel @Inject constructor(private val marvelCharacters
     private val _isErrorLoadingCharacters: MutableLiveData<Boolean> = MutableLiveData(false)
     val isErrorLoadingCharacters: LiveData<Boolean> = _isErrorLoadingCharacters
 
-    private fun getCharactersFrom(marvelCharactersResult: Result<List<MarvelCharacter>>?): LiveData<List<MarvelCharacter>> {
+    private fun insertFetchedCharactersFrom(marvelCharactersResult: Result<List<MarvelCharacter>>): LiveData<List<MarvelCharacter>> { //TODO: refactor
+        val marvelCharacters = mutableListOf<MarvelCharacter>()
+        this.characters.value?.let { marvelCharacters.addAll(it) }
+        getCharactersDataFrom(marvelCharactersResult).value?.let { marvelCharacters.addAll(it) }
+        return MutableLiveData(marvelCharacters)
+    }
+
+    private fun getCharactersDataFrom(marvelCharactersResult: Result<List<MarvelCharacter>>?): LiveData<List<MarvelCharacter>> {
         val result = MutableLiveData<List<MarvelCharacter>>()
         when (marvelCharactersResult) {
             is Success -> {

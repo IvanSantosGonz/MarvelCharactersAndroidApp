@@ -46,7 +46,7 @@ class MasterFragment : Fragment() {
         fragmentMasterBinding.viewmodel = marvelCharactersViewModel
         fragmentMasterBinding.lifecycleOwner = this
 
-        val onClickListener = View.OnClickListener { itemView ->
+        val onClickListener = View.OnClickListener { itemView -> //TODO: move to function
             val clickedCharacterPosition = recyclerView.getChildAdapterPosition(itemView)
             val clickedMarvelCharacter =
                 marvelCharactersViewModel.characters.value?.get(clickedCharacterPosition)
@@ -59,13 +59,25 @@ class MasterFragment : Fragment() {
         }
 
         setAdapter(listOf(), onClickListener)
-        marvelCharactersViewModel.createSampleCharacters()
+        if (marvelCharactersViewModel.characters.value == null) {
+            marvelCharactersViewModel.createSampleCharacters() //TODO: use same function thar load more chars
+        }
+
         marvelCharactersViewModel.characters.observe(
             this,
             { characters ->
                 viewAdapter.swapData(characters)
             }
         )
+
+        recyclerView.setOnScrollChangeListener { _, _, _, _, _ -> //TODO: move to function
+            val layoutManager: GridLayoutManager =
+                fragmentMasterBinding.recyclerViewCharacters.layoutManager as GridLayoutManager
+            val lastCharacterPosition = marvelCharactersViewModel.characters.value!!.size - 1
+            if (lastCharacterPosition != 0 && layoutManager.findLastCompletelyVisibleItemPosition() == lastCharacterPosition) {
+                marvelCharactersViewModel.loadMoreCharacters()
+            }
+        }
     }
 
     private fun setAdapter(

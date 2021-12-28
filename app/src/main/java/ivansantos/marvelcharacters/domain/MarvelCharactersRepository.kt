@@ -8,4 +8,5 @@ interface MarvelCharactersRepository {
     val marvelCharacters: MutableLiveData<Result<List<MarvelCharacter>>>
 
     suspend fun createSampleCharacters()
+    suspend fun retrieveCharactersFrom(numberOfLoadedCharacters: Int)
 }

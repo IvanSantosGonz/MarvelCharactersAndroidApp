@@ -11,4 +11,12 @@ interface RemoteDataSource {
         @Query("apikey") apikey: String,
         @Query("hash") hash: String,
     ): MarvelAPIResponseDTO
+
+    @GET("characters")
+    suspend fun getCharactersFrom(
+        @Query("ts") timestamp: String,
+        @Query("apikey") apikey: String,
+        @Query("hash") hash: String,
+        @Query("offset") offset: Int,
+    ): MarvelAPIResponseDTO
 }

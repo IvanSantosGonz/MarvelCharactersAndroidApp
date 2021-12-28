@@ -21,4 +21,8 @@ class InMemoryMarvelCharactersRepository : MarvelCharactersRepository {
     override suspend fun createSampleCharacters() {
         marvelCharacters.postValue(Result.Success(sampleCharacters))
     }
+
+    override suspend fun retrieveCharactersFrom(numberOfLoadedCharacters: Int) {
+        TODO("Not yet implemented")
+    }
 }
