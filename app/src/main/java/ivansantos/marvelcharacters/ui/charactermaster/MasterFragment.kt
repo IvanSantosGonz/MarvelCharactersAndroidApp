@@ -51,7 +51,8 @@ class MasterFragment : Fragment() {
         }
         setAdapter(listOf(), onMarvelCharacterClickListener)
 
-        if (marvelCharactersViewModel.characters.value == null) { //TODO: extract to function
+        val existCharacters = marvelCharactersViewModel.characters.value != null
+        if (!existCharacters) {
             marvelCharactersViewModel.loadCharacters()
         }
 
