@@ -60,7 +60,6 @@ class MasterFragment : Fragment() {
             marvelCharactersViewModel.loadCharacters()
         }
 
-
         marvelCharactersViewModel.characters.observe(
             viewLifecycleOwner,
             { characters ->
@@ -68,13 +67,17 @@ class MasterFragment : Fragment() {
             }
         )
 
-        recyclerView.setOnScrollChangeListener { _, _, _, _, _ -> //TODO: move to function
-            val layoutManager: GridLayoutManager =
-                fragmentMasterBinding.recyclerViewCharacters.layoutManager as GridLayoutManager
-            val lastCharacterPosition = marvelCharactersViewModel.characters.value!!.size - 1
-            if (lastCharacterPosition != 0 && layoutManager.findLastCompletelyVisibleItemPosition() == lastCharacterPosition) {
-                marvelCharactersViewModel.loadCharacters()
-            }
+        recyclerView.setOnScrollChangeListener { _, _, _, _, _ ->
+            loadMoreCharacterWhenScrollToTheBottom()
+        }
+    }
+
+    private fun loadMoreCharacterWhenScrollToTheBottom() {
+        val layoutManager: GridLayoutManager =
+            fragmentMasterBinding.recyclerViewCharacters.layoutManager as GridLayoutManager
+        val lastCharacterPosition = marvelCharactersViewModel.characters.value!!.size - 1
+        if (lastCharacterPosition != 0 && layoutManager.findLastCompletelyVisibleItemPosition() == lastCharacterPosition) {
+            marvelCharactersViewModel.loadCharacters()
         }
     }
 
