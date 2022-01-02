@@ -15,24 +15,6 @@ class DefaultMarvelCharactersRepository @Inject constructor(
     override val marvelCharacters: MutableLiveData<Result<List<MarvelCharacter>>> =
         MutableLiveData<Result<List<MarvelCharacter>>>()
 
-    override suspend fun createSampleCharacters() { //TODO: remove and use only retrieveCharactersFrom
-        marvelCharacters.postValue(Result.Loading)
-
-        kotlin.runCatching {
-            remoteDataSource.getCharacters(
-                marvelAPI.timestamp.toString(),
-                marvelAPI.apiKey,
-                marvelAPI.hash)
-        }
-            .onSuccess { marvelAPIResponseDTO ->
-                marvelCharacters.postValue(Result.Success(marvelAPIResponseDTO.getCharacters()))
-            }
-            .onFailure { error: Throwable ->
-                marvelCharacters.postValue(Result.Error(error))
-            }
-
-    }
-
     override suspend fun retrieveCharactersFrom(numberOfLoadedCharacters: Int) {
         marvelCharacters.postValue(Result.Loading)
 

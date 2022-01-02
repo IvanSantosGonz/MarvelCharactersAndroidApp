@@ -55,12 +55,12 @@ class MasterFragment : Fragment() {
         }
 
         fragmentMasterBinding.retryButton.setOnClickListener {
-            marvelCharactersViewModel.createSampleCharacters()
+            marvelCharactersViewModel.loadCharacters()
         }
 
         setAdapter(listOf(), onClickListener)
         if (marvelCharactersViewModel.characters.value == null) {
-            marvelCharactersViewModel.createSampleCharacters() //TODO: use same function thar load more chars
+            marvelCharactersViewModel.loadCharacters()
         }
 
         marvelCharactersViewModel.characters.observe(
@@ -75,7 +75,7 @@ class MasterFragment : Fragment() {
                 fragmentMasterBinding.recyclerViewCharacters.layoutManager as GridLayoutManager
             val lastCharacterPosition = marvelCharactersViewModel.characters.value!!.size - 1
             if (lastCharacterPosition != 0 && layoutManager.findLastCompletelyVisibleItemPosition() == lastCharacterPosition) {
-                marvelCharactersViewModel.loadMoreCharacters()
+                marvelCharactersViewModel.loadCharacters()
             }
         }
     }

@@ -6,17 +6,10 @@ import retrofit2.http.Query
 interface RemoteDataSource {
 
     @GET("characters")
-    suspend fun getCharacters(
-        @Query("ts") timestamp: String,
-        @Query("apikey") apikey: String,
-        @Query("hash") hash: String,
-    ): MarvelAPIResponseDTO
-
-    @GET("characters")
     suspend fun getCharactersFrom(
         @Query("ts") timestamp: String,
         @Query("apikey") apikey: String,
         @Query("hash") hash: String,
-        @Query("offset") offset: Int,
+        @Query("offset") offset: Int = 0,
     ): MarvelAPIResponseDTO
 }
