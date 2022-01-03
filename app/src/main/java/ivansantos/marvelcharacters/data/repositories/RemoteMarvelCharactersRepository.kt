@@ -8,7 +8,7 @@ import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.domain.MarvelCharactersRepository
 import javax.inject.Inject
 
-class DefaultMarvelCharactersRepository @Inject constructor(
+class RemoteMarvelCharactersRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val marvelAPI: MarvelAPI,
 ) : MarvelCharactersRepository {

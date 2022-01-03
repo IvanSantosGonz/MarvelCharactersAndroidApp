@@ -10,7 +10,7 @@ import ivansantos.marvelcharacters.R
 import ivansantos.marvelcharacters.data.RemoteDataSource
 import ivansantos.marvelcharacters.data.network.MarvelAPI
 import ivansantos.marvelcharacters.data.network.PicassoThumbnailService
-import ivansantos.marvelcharacters.data.repositories.DefaultMarvelCharactersRepository
+import ivansantos.marvelcharacters.data.repositories.RemoteMarvelCharactersRepository
 import ivansantos.marvelcharacters.domain.MarvelCharactersRepository
 import ivansantos.marvelcharacters.domain.ThumbnailService
 import retrofit2.Retrofit
@@ -48,7 +48,7 @@ class MarvelCharactersModule {
         remoteDataSource: RemoteDataSource,
         marvelAPI: MarvelAPI,
     ): MarvelCharactersRepository {
-        return DefaultMarvelCharactersRepository(remoteDataSource, marvelAPI)
+        return RemoteMarvelCharactersRepository(remoteDataSource, marvelAPI)
     }
 
     @Singleton

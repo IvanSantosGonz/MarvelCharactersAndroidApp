@@ -24,7 +24,7 @@ import ivansantos.marvelcharacters.R
 import ivansantos.marvelcharacters.data.*
 import ivansantos.marvelcharacters.data.network.MarvelAPI
 import ivansantos.marvelcharacters.data.network.PicassoThumbnailService
-import ivansantos.marvelcharacters.data.repositories.DefaultMarvelCharactersRepository
+import ivansantos.marvelcharacters.data.repositories.RemoteMarvelCharactersRepository
 import ivansantos.marvelcharacters.di.MarvelCharactersModule
 import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.domain.MarvelCharactersRepository
@@ -159,7 +159,7 @@ class MainViewShould {
     }
 
     private fun initMarvelCharactersRepositoryWith(remoteDataSource: RemoteDataSource) {
-        marvelCharactersRepository = DefaultMarvelCharactersRepository(
+        marvelCharactersRepository = RemoteMarvelCharactersRepository(
             remoteDataSource,
             MarvelAPI(apiKey = "", privateKey = "")
         )
