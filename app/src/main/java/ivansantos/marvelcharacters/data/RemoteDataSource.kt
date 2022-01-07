@@ -12,4 +12,13 @@ interface RemoteDataSource {
         @Query("hash") hash: String,
         @Query("offset") offset: Int = 0,
     ): MarvelAPIResponseDTO
+
+    @GET("characters")
+    suspend fun getCharactersFilterByName(
+        @Query("ts") timestamp: String,
+        @Query("apikey") apikey: String,
+        @Query("hash") hash: String,
+        @Query("offset") offset: Int = 0,
+        @Query("nameStartsWith") nameStartsWith: String,
+    ): MarvelAPIResponseDTO
 }

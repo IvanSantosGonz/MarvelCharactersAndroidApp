@@ -18,7 +18,10 @@ class InMemoryMarvelCharactersRepository : MarvelCharactersRepository {
     override val marvelCharacters: MutableLiveData<Result<List<MarvelCharacter>>> =
         MutableLiveData(Result.Success(sampleCharacters))
 
-    override suspend fun retrieveCharactersFrom(numberOfLoadedCharacters: Int) {
+    override suspend fun retrieveCharactersFrom(
+        numberOfLoadedCharacters: Int,
+        characterName: String,
+    ) {
         marvelCharacters.postValue(Result.Success(sampleCharacters))
     }
 }

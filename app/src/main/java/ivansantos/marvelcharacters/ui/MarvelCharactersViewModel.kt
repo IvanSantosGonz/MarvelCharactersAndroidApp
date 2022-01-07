@@ -13,7 +13,7 @@ import javax.inject.Inject
 class MarvelCharactersViewModel @Inject constructor(private val marvelCharactersRepository: MarvelCharactersRepository) :
     ViewModel() {
 
-    val characters: LiveData<List<MarvelCharacter>> =
+    val characters: LiveData<MutableList<MarvelCharacter>> =
         marvelCharactersRepository.marvelCharacters.switchMap { marvelCharactersResult ->
             insertFetchedCharactersFrom(marvelCharactersResult)
         }
@@ -31,6 +31,21 @@ class MarvelCharactersViewModel @Inject constructor(private val marvelCharacters
         }
     }
 
+    fun removeCharacters() {
+        characters.value?.clear()
+    }
+
+    fun loadCharactersBy(name: String) {
+        viewModelScope.launch {
+            val loadedCharacters = characters.value
+            if (loadedCharacters == null) {
+                marvelCharactersRepository.retrieveCharactersFrom(characterName = name)
+            } else {
+                marvelCharactersRepository.retrieveCharactersFrom(loadedCharacters.size, name)
+            }
+        }
+    }
+
     fun setSelected(marvelCharacter: MarvelCharacter) {
         selectedCharacter.postValue(marvelCharacter)
     }
@@ -41,7 +56,7 @@ class MarvelCharactersViewModel @Inject constructor(private val marvelCharacters
     private val _isErrorLoadingCharacters: MutableLiveData<Boolean> = MutableLiveData(false)
     val isErrorLoadingCharacters: LiveData<Boolean> = _isErrorLoadingCharacters
 
-    private fun insertFetchedCharactersFrom(marvelCharactersResult: Result<List<MarvelCharacter>>): LiveData<List<MarvelCharacter>> { //TODO: refactor
+    private fun insertFetchedCharactersFrom(marvelCharactersResult: Result<List<MarvelCharacter>>): LiveData<MutableList<MarvelCharacter>> {
         val marvelCharacters = mutableListOf<MarvelCharacter>()
         this.characters.value?.let { marvelCharacters.addAll(it) }
         getCharactersDataFrom(marvelCharactersResult).value?.let { marvelCharacters.addAll(it) }

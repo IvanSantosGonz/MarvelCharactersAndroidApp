@@ -1,9 +1,11 @@
 package ivansantos.marvelcharacters.ui.charactermaster
 
+import android.app.SearchManager
+import android.content.ComponentName
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -14,8 +16,10 @@ import ivansantos.marvelcharacters.R
 import ivansantos.marvelcharacters.databinding.FragmentMasterBinding
 import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.domain.ThumbnailService
+import ivansantos.marvelcharacters.ui.MainActivity
 import ivansantos.marvelcharacters.ui.MarvelCharactersViewModel
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MasterFragment : Fragment() {
@@ -70,6 +74,35 @@ class MasterFragment : Fragment() {
         recyclerView.setOnScrollChangeListener { _, _, _, _, _ ->
             loadMoreCharacterWhenScrollToTheBottom()
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.option_menu, menu)
+        val searchManager = context?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu.findItem(R.id.search).actionView as SearchView
+        searchView.apply {
+            setSearchableInfo(searchManager.getSearchableInfo(ComponentName(context,
+                MainActivity::class.java)))
+        }
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(searchText: String): Boolean {
+                marvelCharactersViewModel.removeCharacters()
+                marvelCharactersViewModel.loadCharactersBy(searchText)
+                return false
+            }
+
+            override fun onQueryTextChange(searchText: String): Boolean {
+                return false
+            }
+        })
     }
 
     private fun loadMoreCharacterWhenScrollToTheBottom() {

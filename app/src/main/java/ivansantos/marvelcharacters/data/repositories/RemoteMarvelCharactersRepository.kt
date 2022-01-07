@@ -15,17 +15,29 @@ class RemoteMarvelCharactersRepository @Inject constructor(
     override val marvelCharacters: MutableLiveData<Result<List<MarvelCharacter>>> =
         MutableLiveData<Result<List<MarvelCharacter>>>()
 
-    override suspend fun retrieveCharactersFrom(numberOfLoadedCharacters: Int) {
+    override suspend fun retrieveCharactersFrom(
+        numberOfLoadedCharacters: Int,
+        characterName: String,
+    ) {
         marvelCharacters.postValue(Result.Loading)
 
         kotlin.runCatching {
-            remoteDataSource.getCharactersFrom(
-                marvelAPI.timestamp.toString(),
-                marvelAPI.apiKey,
-                marvelAPI.hash,
-                numberOfLoadedCharacters
-            )
-
+            if (characterName.isEmpty()) {
+                remoteDataSource.getCharactersFrom(
+                    marvelAPI.timestamp.toString(),
+                    marvelAPI.apiKey,
+                    marvelAPI.hash,
+                    numberOfLoadedCharacters
+                )
+            } else {
+                remoteDataSource.getCharactersFilterByName(
+                    marvelAPI.timestamp.toString(),
+                    marvelAPI.apiKey,
+                    marvelAPI.hash,
+                    numberOfLoadedCharacters,
+                    characterName
+                )
+            }
         }
             .onSuccess { marvelAPIResponseDTO ->
                 marvelCharacters.postValue(Result.Success(marvelAPIResponseDTO.getCharacters()))
