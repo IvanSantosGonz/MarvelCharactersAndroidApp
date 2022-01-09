@@ -31,6 +31,7 @@ class MasterFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: MarvelCharactersRecyclerViewAdapter
     private lateinit var fragmentMasterBinding: FragmentMasterBinding
+    private lateinit var searchView: SearchView
 
     @Inject
     lateinit var thumbnailService: ThumbnailService
@@ -86,7 +87,7 @@ class MasterFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.option_menu, menu)
         val searchManager = context?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = menu.findItem(R.id.search).actionView as SearchView
+        searchView = menu.findItem(R.id.search).actionView as SearchView
         searchView.apply {
             setSearchableInfo(searchManager.getSearchableInfo(ComponentName(context,
                 MainActivity::class.java)))
@@ -95,7 +96,7 @@ class MasterFragment : Fragment() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(searchText: String): Boolean {
                 marvelCharactersViewModel.removeCharacters()
-                marvelCharactersViewModel.loadCharactersBy(searchText)
+                marvelCharactersViewModel.loadCharacters(searchText)
                 return false
             }
 
@@ -106,12 +107,30 @@ class MasterFragment : Fragment() {
     }
 
     private fun loadMoreCharacterWhenScrollToTheBottom() {
+        if (isTheLastPositionOfTheList() && existsMoreCharactersToLoad()) {
+            marvelCharactersViewModel.loadCharacters(getSearchText())
+        }
+    }
+
+    private fun isTheLastPositionOfTheList(): Boolean {
         val layoutManager: GridLayoutManager =
             fragmentMasterBinding.recyclerViewCharacters.layoutManager as GridLayoutManager
         val lastCharacterPosition = marvelCharactersViewModel.characters.value!!.size - 1
-        if (lastCharacterPosition != 0 && layoutManager.findLastCompletelyVisibleItemPosition() == lastCharacterPosition) {
-            marvelCharactersViewModel.loadCharacters()
+        return lastCharacterPosition != 0 && layoutManager.findLastCompletelyVisibleItemPosition() == lastCharacterPosition
+    }
+
+    private fun existsMoreCharactersToLoad(): Boolean {
+        val lastCharacterPosition = marvelCharactersViewModel.characters.value!!.size - 1
+        return lastCharacterPosition < marvelCharactersViewModel.totalCharacters.value!!
+
+    }
+
+    private fun getSearchText(): String? {
+        val searchText: String = searchView.query.toString()
+        if (searchText.isEmpty()) {
+            return null
         }
+        return searchText
     }
 
     private fun navigateToDetailFragment(itemView: View) {

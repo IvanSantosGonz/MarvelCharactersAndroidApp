@@ -1,5 +1,6 @@
 package ivansantos.marvelcharacters.data.repositories
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ivansantos.marvelcharacters.data.Result
 import ivansantos.marvelcharacters.domain.MarvelCharacter
@@ -17,10 +18,12 @@ class InMemoryMarvelCharactersRepository : MarvelCharactersRepository {
 
     override val marvelCharacters: MutableLiveData<Result<List<MarvelCharacter>>> =
         MutableLiveData(Result.Success(sampleCharacters))
+    override val totalCharacters: LiveData<Int> = MutableLiveData()
+
 
     override suspend fun retrieveCharactersFrom(
+        characterName: String?,
         numberOfLoadedCharacters: Int,
-        characterName: String,
     ) {
         marvelCharacters.postValue(Result.Success(sampleCharacters))
     }

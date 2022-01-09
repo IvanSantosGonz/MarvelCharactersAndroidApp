@@ -20,30 +20,17 @@ class MarvelCharactersViewModel @Inject constructor(private val marvelCharacters
 
     val selectedCharacter: MutableLiveData<MarvelCharacter> = MutableLiveData<MarvelCharacter>()
 
-    fun loadCharacters() {
+    val totalCharacters = marvelCharactersRepository.totalCharacters
+
+    fun loadCharacters(name: String? = null) {
         viewModelScope.launch {
-            val loadedCharacters = characters.value
-            if (loadedCharacters == null) {
-                marvelCharactersRepository.retrieveCharactersFrom()
-            } else {
-                marvelCharactersRepository.retrieveCharactersFrom(loadedCharacters.size)
-            }
+            val numberOfLoadedCharacters = characters.value?.size ?: 0
+            marvelCharactersRepository.retrieveCharactersFrom(name, numberOfLoadedCharacters)
         }
     }
 
     fun removeCharacters() {
         characters.value?.clear()
-    }
-
-    fun loadCharactersBy(name: String) {
-        viewModelScope.launch {
-            val loadedCharacters = characters.value
-            if (loadedCharacters == null) {
-                marvelCharactersRepository.retrieveCharactersFrom(characterName = name)
-            } else {
-                marvelCharactersRepository.retrieveCharactersFrom(loadedCharacters.size, name)
-            }
-        }
     }
 
     fun setSelected(marvelCharacter: MarvelCharacter) {

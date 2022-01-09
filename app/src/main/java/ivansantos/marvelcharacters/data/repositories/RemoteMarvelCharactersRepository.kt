@@ -1,5 +1,6 @@
 package ivansantos.marvelcharacters.data.repositories
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ivansantos.marvelcharacters.data.RemoteDataSource
 import ivansantos.marvelcharacters.data.Result
@@ -15,32 +16,27 @@ class RemoteMarvelCharactersRepository @Inject constructor(
     override val marvelCharacters: MutableLiveData<Result<List<MarvelCharacter>>> =
         MutableLiveData<Result<List<MarvelCharacter>>>()
 
+    private val _totalCharacters = MutableLiveData(0)
+    override val totalCharacters: LiveData<Int> = _totalCharacters
+
     override suspend fun retrieveCharactersFrom(
+        characterName: String?,
         numberOfLoadedCharacters: Int,
-        characterName: String,
     ) {
         marvelCharacters.postValue(Result.Loading)
 
         kotlin.runCatching {
-            if (characterName.isEmpty()) {
-                remoteDataSource.getCharactersFrom(
-                    marvelAPI.timestamp.toString(),
-                    marvelAPI.apiKey,
-                    marvelAPI.hash,
-                    numberOfLoadedCharacters
-                )
-            } else {
-                remoteDataSource.getCharactersFilterByName(
-                    marvelAPI.timestamp.toString(),
-                    marvelAPI.apiKey,
-                    marvelAPI.hash,
-                    numberOfLoadedCharacters,
-                    characterName
-                )
-            }
+            remoteDataSource.getCharacters(
+                marvelAPI.timestamp.toString(),
+                marvelAPI.apiKey,
+                marvelAPI.hash,
+                numberOfLoadedCharacters,
+                characterName
+            )
         }
             .onSuccess { marvelAPIResponseDTO ->
                 marvelCharacters.postValue(Result.Success(marvelAPIResponseDTO.getCharacters()))
+                _totalCharacters.postValue(marvelAPIResponseDTO.data.total.toInt())
             }
             .onFailure { error: Throwable ->
                 marvelCharacters.postValue(Result.Error(error))

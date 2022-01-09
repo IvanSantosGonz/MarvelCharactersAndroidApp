@@ -67,7 +67,7 @@ class MainViewShould {
     @Test
     fun show_master_view_with_loaded_characters() {
         coEvery {
-            remoteDataSource.getCharactersFrom(any(), any(), any())
+            remoteDataSource.getCharacters(any(), any(), any())
         } returns fakeMarvelAPIResponseDTO
         initMarvelCharactersRepositoryWith(remoteDataSource)
         launchMainActivity()
@@ -80,7 +80,7 @@ class MainViewShould {
     @Test
     fun show_master_view_with_correct_details_for_loaded_characters() {
         coEvery {
-            remoteDataSource.getCharactersFrom(any(), any(), any())
+            remoteDataSource.getCharacters(any(), any(), any())
         } returns fakeMarvelAPIResponseDTO
         initMarvelCharactersRepositoryWith(remoteDataSource)
 
@@ -102,7 +102,7 @@ class MainViewShould {
     @Test
     fun load_character_thumbnail() {
         coEvery {
-            remoteDataSource.getCharactersFrom(any(), any(), any())
+            remoteDataSource.getCharacters(any(), any(), any())
         } returns fakeMarvelAPIResponseDTO
         initMarvelCharactersRepositoryWith(remoteDataSource)
         launchMainActivity()
@@ -117,7 +117,7 @@ class MainViewShould {
     @Test
     fun load_character_description() {
         coEvery {
-            remoteDataSource.getCharactersFrom(any(), any(), any())
+            remoteDataSource.getCharacters(any(), any(), any())
         } returns fakeMarvelAPIResponseDTO
         initMarvelCharactersRepositoryWith(remoteDataSource)
         launchMainActivity()
@@ -133,7 +133,7 @@ class MainViewShould {
     @Test
     fun load_character_without_any_available_description() {
         coEvery {
-            remoteDataSource.getCharactersFrom(any(), any(), any())
+            remoteDataSource.getCharacters(any(), any(), any())
         } returns fakeMarvelAPIResponseDTOWithEmptyDescription
         initMarvelCharactersRepositoryWith(remoteDataSource)
         launchMainActivity()
@@ -149,7 +149,7 @@ class MainViewShould {
     @Test
     fun show_error_page_when_api_fails() {
         coEvery {
-            remoteDataSource.getCharactersFrom(any(), any(), any())
+            remoteDataSource.getCharacters(any(), any(), any())
         } throws Exception()
         initMarvelCharactersRepositoryWith(remoteDataSource)
         launchMainActivity()
