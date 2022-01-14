@@ -63,7 +63,7 @@
                 android:padding="16dp"
                 android:text="@string/description_label"
                 android:textAllCaps="true"
-                android:textColor="@color/marvel_red" />
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/text_marvel_character_details_description"
@@ -73,6 +73,7 @@
                 android:layout_marginStart="@dimen/default_text_indentation"
                 android:padding="16dp"
                 android:text="@string/fake_description"
+                android:textColor="@color/gray"
                 app:layout_constraintTop_toBottomOf="@+id/text_marvel_character_details_description_label" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

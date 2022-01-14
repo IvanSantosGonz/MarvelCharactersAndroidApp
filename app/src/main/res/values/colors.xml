@@ -8,4 +8,7 @@
     <color name="marvel_light_red_opaque">#77F0141E</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="marvel_red">#6A060B</color>
+    <color name="light_black">#202020</color>
+    <color name="marvel_black">#151515</color>
+
 </resources>
