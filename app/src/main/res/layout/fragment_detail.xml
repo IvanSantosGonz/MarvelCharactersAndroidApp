@@ -88,6 +88,10 @@
         android:contentDescription="@string/fab_button"
         app:layout_anchor="@+id/item_detail_scroll_view"
         app:layout_anchorGravity="top|end"
-        app:srcCompat="@android:drawable/stat_notify_chat" />
+        android:color="@color/marvel_red"
+        app:backgroundTint="@color/marvel_red"
+        app:rippleColor="@color/marvel_light_red"
+        app:srcCompat="@android:drawable/star_on"
+        app:tint="@color/yellow" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
