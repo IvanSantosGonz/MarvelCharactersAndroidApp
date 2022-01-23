@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/item_master_fragment">
+    app:startDestination="@id/master_fragment">
 
     <fragment
-        android:id="@+id/item_master_fragment"
+        android:id="@+id/master_fragment"
         android:name="ivansantos.marvelcharacters.ui.charactermaster.MasterFragment"
         android:label="@string/master_fragment_title">
         <action
@@ -16,6 +16,10 @@
     <fragment
         android:id="@+id/detail_fragment"
         android:name="ivansantos.marvelcharacters.ui.characterdetails.DetailFragment"
-        android:label="@string/details_fragment_title"
-        tools:layout="@layout/fragment_detail" />
+        android:label="@string/details_fragment_title" />
+    <fragment
+        android:id="@+id/favorites_fragment"
+        android:name="ivansantos.marvelcharacters.ui.favorites.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" />
 </navigation>

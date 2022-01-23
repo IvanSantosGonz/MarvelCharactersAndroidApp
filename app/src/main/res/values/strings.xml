@@ -21,4 +21,8 @@
     <string name="details_fragment_title">Character details</string>
     <string name="search">search</string>
 
+    <!-- favorites fragment-->
+    <string name="title_favorites_fragment">Favorites</string>
+    <string name="favorites">Favorites</string>
+
 </resources>
