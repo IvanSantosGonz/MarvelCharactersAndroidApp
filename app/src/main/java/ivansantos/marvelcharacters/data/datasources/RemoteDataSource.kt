@@ -1,5 +1,6 @@
-package ivansantos.marvelcharacters.data
+package ivansantos.marvelcharacters.data.datasources
 
+import ivansantos.marvelcharacters.data.MarvelAPIResponseDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 

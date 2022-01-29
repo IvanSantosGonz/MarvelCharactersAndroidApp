@@ -6,6 +6,7 @@ import ivansantos.marvelcharacters.data.Result
 import ivansantos.marvelcharacters.data.Result.Success
 import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.domain.MarvelCharactersRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,6 +22,19 @@ class MarvelCharactersViewModel @Inject constructor(private val marvelCharacters
     val selectedCharacter: MutableLiveData<MarvelCharacter> = MutableLiveData<MarvelCharacter>()
 
     val totalCharacters = marvelCharactersRepository.totalCharacters
+
+    val favoriteCharacters: LiveData<MutableList<MarvelCharacter>> =
+        marvelCharactersRepository.favoriteCharacters.map { marvelCharactersResult ->
+            marvelCharactersResult as MutableList<MarvelCharacter>
+        }
+
+    private val _isSelectedCharacterAFavoriteCharacter: MutableLiveData<Boolean> =
+        selectedCharacter.switchMap {
+            if (favoriteCharacters.value != null) MutableLiveData(favoriteCharacters.value!!.contains(
+                it)) else MutableLiveData(false)
+        } as MutableLiveData<Boolean>
+    val isSelectedCharacterAFavoriteCharacter: LiveData<Boolean> =
+        _isSelectedCharacterAFavoriteCharacter
 
     fun loadCharacters(name: String? = null) {
         viewModelScope.launch {
@@ -72,5 +86,21 @@ class MarvelCharactersViewModel @Inject constructor(private val marvelCharacters
         }
 
         return result
+    }
+
+    fun toggleFavorite() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val marvelCharacter = selectedCharacter.value!!
+            if (marvelCharactersRepository.isFavorite(marvelCharacter)) {
+                marvelCharactersRepository.removeFromFavorites(marvelCharacter)
+            } else {
+                marvelCharactersRepository.addToFavorites(marvelCharacter)
+            }
+        }
+    }
+
+    fun toggleFabIcon() {
+        _isSelectedCharacterAFavoriteCharacter.value =
+            !_isSelectedCharacterAFavoriteCharacter.value!!
     }
 }

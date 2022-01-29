@@ -14,6 +14,7 @@ import ivansantos.marvelcharacters.domain.ThumbnailService
 import ivansantos.marvelcharacters.ui.MarvelCharactersViewModel
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
 
@@ -29,11 +30,26 @@ class DetailFragment : Fragment() {
     ): View {
 
         fragmentDetailBinding = FragmentDetailBinding.inflate(inflater, container, false)
-        val rootView = fragmentDetailBinding.root
 
         val currentCharacter = marvelCharactersViewModel.selectedCharacter.value
         currentCharacter?.let { character -> bindCharacterDetailsView(character) }
-        return rootView
+
+        fragmentDetailBinding.fabToggleFavorites.setOnClickListener {
+            onClickFavoriteButton(it)
+        }
+        return fragmentDetailBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        fragmentDetailBinding.marvelCharactersViewModel = marvelCharactersViewModel
+        fragmentDetailBinding.lifecycleOwner = this
+    }
+
+    private fun onClickFavoriteButton(itemView: View) {
+        marvelCharactersViewModel.toggleFabIcon()
+        marvelCharactersViewModel.toggleFavorite()
     }
 
     private fun bindCharacterDetailsView(currentCharacter: MarvelCharacter) {

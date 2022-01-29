@@ -21,15 +21,23 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import ivansantos.marvelcharacters.R
-import ivansantos.marvelcharacters.data.*
+import ivansantos.marvelcharacters.data.Data
+import ivansantos.marvelcharacters.data.MarvelAPIResponseDTO
+import ivansantos.marvelcharacters.data.ResultDTO
+import ivansantos.marvelcharacters.data.Thumbnail
+import ivansantos.marvelcharacters.data.datasources.FavoritesDbDataSource
+import ivansantos.marvelcharacters.data.datasources.RemoteDataSource
+import ivansantos.marvelcharacters.data.db.MarvelCharactersFavoriteDatabase
 import ivansantos.marvelcharacters.data.network.MarvelAPI
 import ivansantos.marvelcharacters.data.network.PicassoThumbnailService
-import ivansantos.marvelcharacters.data.repositories.RemoteMarvelCharactersRepository
+import ivansantos.marvelcharacters.data.repositories.DefaultMarvelCharactersRepository
 import ivansantos.marvelcharacters.di.MarvelCharactersModule
 import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.domain.MarvelCharactersRepository
 import ivansantos.marvelcharacters.domain.ThumbnailImage
 import ivansantos.marvelcharacters.domain.ThumbnailService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import org.hamcrest.CoreMatchers
 import org.hamcrest.Matcher
 import org.junit.Before
@@ -51,6 +59,9 @@ class MainViewShould {
     lateinit var remoteDataSource: RemoteDataSource
 
     @BindValue
+    lateinit var favoritesDbDataSource: FavoritesDbDataSource
+
+    @BindValue
     lateinit var marvelCharactersRepository: MarvelCharactersRepository
 
     @BindValue
@@ -63,6 +74,11 @@ class MainViewShould {
 
     @Before
     fun setUp() = MockKAnnotations.init(this, relaxUnitFun = true)
+
+    @Before
+    fun init() {
+        hiltRule.inject()
+    }
 
     @Test
     fun show_master_view_with_loaded_characters() {
@@ -159,10 +175,21 @@ class MainViewShould {
     }
 
     private fun initMarvelCharactersRepositoryWith(remoteDataSource: RemoteDataSource) {
-        marvelCharactersRepository = RemoteMarvelCharactersRepository(
+        favoritesDbDataSource = setupFavoritesDBDatasource()
+        marvelCharactersRepository = DefaultMarvelCharactersRepository(
             remoteDataSource,
+            favoritesDbDataSource,
             MarvelAPI(apiKey = "", privateKey = "")
         )
+    }
+
+    private fun setupFavoritesDBDatasource(): FavoritesDbDataSource {
+        val applicationScope = CoroutineScope(SupervisorJob())
+        val database =
+            MarvelCharactersFavoriteDatabase.getDatabase(ApplicationProvider.getApplicationContext(),
+                applicationScope,
+                "marvel_characters_favorite_database_test")
+        return FavoritesDbDataSource(((database) as MarvelCharactersFavoriteDatabase).marvelCharacterFavoritesDao())
     }
 
     private var fakeMarvelAPIResponseDTO = MarvelAPIResponseDTO(

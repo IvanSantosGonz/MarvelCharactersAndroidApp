@@ -48,7 +48,7 @@ class MasterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fragmentMasterBinding.viewmodel = marvelCharactersViewModel
+        fragmentMasterBinding.marvelCharactersViewModel = marvelCharactersViewModel
         fragmentMasterBinding.lifecycleOwner = this
 
         val onMarvelCharacterClickListener = View.OnClickListener { itemView ->
@@ -80,7 +80,6 @@ class MasterFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -102,6 +102,12 @@ dependencies {
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.8'
 
+    //Room
+    def roomVersion = "2.4.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
 }
 
 tasks.withType(Test) {
