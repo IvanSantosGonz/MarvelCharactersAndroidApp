@@ -88,7 +88,7 @@ class MainViewShould {
         initMarvelCharactersRepositoryWith(remoteDataSource)
         launchMainActivity()
 
-        val recyclerView = onView(withId(R.id.recycler_view_characters))
+        val recyclerView = onView(withId(R.id.recycler_view_favorite_characters))
 
         recyclerView.check(RecyclerViewItemCountAssertion(1))
     }
@@ -172,6 +172,21 @@ class MainViewShould {
 
         val errorPage = onView(withId(R.id.error_page_layout))
         errorPage.check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun show_empty_character_list_when_there_are_not_favorite_characters() {
+        coEvery {
+            remoteDataSource.getCharacters(any(), any(), any())
+        } returns fakeMarvelAPIResponseDTO
+        initMarvelCharactersRepositoryWith(remoteDataSource)
+        launchMainActivity()
+
+        val buttonNavFavorites = onView(withId(R.id.favorites_fragment))
+        buttonNavFavorites.perform(ViewActions.click())
+
+        val recyclerView = onView(withId(R.id.recycler_view_favorite_characters))
+        recyclerView.check(RecyclerViewItemCountAssertion(0))
     }
 
     private fun initMarvelCharactersRepositoryWith(remoteDataSource: RemoteDataSource) {
