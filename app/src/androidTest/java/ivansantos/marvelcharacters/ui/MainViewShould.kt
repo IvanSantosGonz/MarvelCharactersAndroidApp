@@ -182,11 +182,15 @@ class MainViewShould {
         initMarvelCharactersRepositoryWith(remoteDataSource)
         launchMainActivity()
 
-        val buttonNavFavorites = onView(withId(R.id.favorites_fragment))
-        buttonNavFavorites.perform(ViewActions.click())
+        navigateToFavorites()
 
         val recyclerView = onView(withId(R.id.recycler_view_favorite_characters))
         recyclerView.check(RecyclerViewItemCountAssertion(0))
+    }
+
+    private fun navigateToFavorites() {
+        val buttonNavFavorites = onView(withId(R.id.favorites_fragment))
+        buttonNavFavorites.perform(ViewActions.click())
     }
 
     private fun initMarvelCharactersRepositoryWith(remoteDataSource: RemoteDataSource) {
