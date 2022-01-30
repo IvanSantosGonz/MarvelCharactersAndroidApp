@@ -3,6 +3,7 @@ package ivansantos.marvelcharacters.ui
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -36,8 +37,6 @@ import ivansantos.marvelcharacters.domain.MarvelCharacter
 import ivansantos.marvelcharacters.domain.MarvelCharactersRepository
 import ivansantos.marvelcharacters.domain.ThumbnailImage
 import ivansantos.marvelcharacters.domain.ThumbnailService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 import org.hamcrest.CoreMatchers
 import org.hamcrest.Matcher
 import org.junit.Before
@@ -203,6 +202,7 @@ class MainViewShould {
         recyclerView.check(RecyclerViewItemCountAssertion(1))
     }
 
+
     private fun navigateToFavorites() {
         val buttonNavFavorites = onView(withId(R.id.favorites_fragment))
         buttonNavFavorites.perform(ViewActions.click())
@@ -226,12 +226,10 @@ class MainViewShould {
     }
 
     private fun setupFavoritesDBDatasource(): FavoritesDbDataSource {
-        val applicationScope = CoroutineScope(SupervisorJob())
-        val database =
-            MarvelCharactersFavoriteDatabase.getDatabase(ApplicationProvider.getApplicationContext(),
-                applicationScope,
-                "marvel_characters_favorite_database_test")
-        return FavoritesDbDataSource(((database) as MarvelCharactersFavoriteDatabase).marvelCharacterFavoritesDao())
+        val database = Room.inMemoryDatabaseBuilder(
+            ApplicationProvider.getApplicationContext(),
+            MarvelCharactersFavoriteDatabase::class.java).build()
+        return FavoritesDbDataSource(database.marvelCharacterFavoritesDao())
     }
 
     private var fakeMarvelAPIResponseDTO = MarvelAPIResponseDTO(
