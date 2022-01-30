@@ -202,6 +202,27 @@ class MainViewShould {
         recyclerView.check(RecyclerViewItemCountAssertion(1))
     }
 
+    @Test
+    fun show_favorite_character_details_when_it_is_selected_as_favorite() {
+        coEvery {
+            remoteDataSource.getCharacters(any(), any(), any())
+        } returns fakeMarvelAPIResponseDTO
+        initMarvelCharactersRepositoryWith(remoteDataSource)
+        launchMainActivity()
+
+        selectFakeHeroAsFavorite()
+        navigateToFavorites()
+        navigateToFakeHeroDetails()
+
+        val fakeHeroDescription =
+            onView(withId(R.id.text_marvel_character_details_description))
+        fakeHeroDescription.check(matches(withText("This is a Fake marvel character")))
+    }
+
+    private fun navigateToFakeHeroDetails() {
+        val characterView = onView(withText("Fake Hero"))
+        characterView.perform(ViewActions.click())
+    }
 
     private fun navigateToFavorites() {
         val buttonNavFavorites = onView(withId(R.id.favorites_fragment))
