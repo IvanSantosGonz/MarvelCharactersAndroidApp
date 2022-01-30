@@ -76,7 +76,7 @@ class FavoritesFragment : Fragment() {
         val viewManager = GridLayoutManager(context, 2)
         viewAdapter =
             MarvelCharactersRecyclerViewAdapter(dataset, onClickListener, thumbnailService)
-        recyclerView = fragmentFavoritesMasterBinding.recyclerViewCharacters
+        recyclerView = fragmentFavoritesMasterBinding.recyclerViewFavoriteCharacters
         recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = viewManager
