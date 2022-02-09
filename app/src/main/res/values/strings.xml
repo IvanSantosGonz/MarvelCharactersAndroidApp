@@ -11,6 +11,7 @@
     <string name="master_fragment_title">Marvel characters</string>
     <string name="loading_marvel_characters">Loading marvel characters …</string>
     <string name="error_loading_marvel_characters">Error loading marvel characters, call Nick Fury or try again later</string>
+    <string name="no_character">We can not find this character. Maybe Thanos killed him/her.</string>
 
     <!-- details fragment-->
     <string name="title_detail_fragment">Item Detail</string>
