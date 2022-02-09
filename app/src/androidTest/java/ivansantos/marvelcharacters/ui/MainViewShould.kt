@@ -87,7 +87,7 @@ class MainViewShould {
         initMarvelCharactersRepositoryWith(remoteDataSource)
         launchMainActivity()
 
-        val recyclerView = onView(withId(R.id.recycler_view_favorite_characters))
+        val recyclerView = onView(withId(R.id.recycler_view_characters))
 
         recyclerView.check(RecyclerViewItemCountAssertion(1))
     }
