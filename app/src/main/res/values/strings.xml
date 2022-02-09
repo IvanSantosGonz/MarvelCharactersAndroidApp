@@ -24,5 +24,7 @@
     <!-- favorites fragment-->
     <string name="title_favorites_fragment">Favorite Characters</string>
     <string name="favorites">Favorites</string>
+    <string name="thanos_glove">Thanos glove</string>
+    <string name="no_fav_characters">There are not favorite characters. Maybe Thanos killed them.</string>
 
 </resources>
